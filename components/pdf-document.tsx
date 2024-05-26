@@ -96,34 +96,48 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Dodavatel:</Text>
-              <Text>Michal Shelenberg</Text>
-              <Text>Všemina 300</Text>
-              <Text>Všemina</Text>
-              <Text>763 15</Text>
+              <Text>{form.billFrom.name}</Text>
+              <Text>{form.billFrom.street}</Text>
+              <Text>{`${form.billFrom.postalCode} ${form.billFrom.city}`}</Text>
+              <Text>{form.billFrom.country}</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                <Text>17049059</Text>
+                <Text>{form.billFrom.ico}</Text>
               </View>
-              <View style={styles.group}>
-                <Text style={styles.font_bold}>DIČ</Text>
-                <Text>CZ17049059</Text>
-              </View>
+              {form.billFrom.dic && (
+                <View style={styles.group}>
+                  <Text style={styles.font_bold}>DIČ</Text>
+                  <Text>{form.billFrom.dic}</Text>
+                </View>
+              )}
             </View>
           </View>
           <View style={styles.column}>
             <View style={styles.group}>
-              <Text style={styles.font_bold}>Odběratel</Text>
-              <Text>Greenpeace Česká republika, z.s.</Text>
-              <Text>Prvního pluku 143/12</Text>
-              <Text>Praha</Text>
-              <Text>18600</Text>
+              <Text style={styles.font_bold}>Odběratel:</Text>
+              <Text>{form.billTo.name}</Text>
+              <Text>{form.billTo.street}</Text>
+              <Text>{`${form.billTo.postalCode} ${form.billTo.city}`}</Text>
+              <Text>{form.billTo.country}</Text>
+            </View>
+            <View style={styles.row}>
+              <View style={styles.group}>
+                <Text style={styles.font_bold}>IČO</Text>
+                <Text>{form.billTo.ico}</Text>
+              </View>
+              {form.billTo.dic && (
+                <View style={styles.group}>
+                  <Text style={styles.font_bold}>DIČ</Text>
+                  <Text>{form.billTo.dic}</Text>
+                </View>
+              )}
             </View>
           </View>
         </View>
         {/* Items table */}
-        <ItemsTable items={dummy_items} />
+        <ItemsTable items={form.items} />
         {/* Payment information */}
         <View style={styles.section}>
           <View style={styles.row}>
@@ -177,6 +191,7 @@ function ItemsTable({ items }: any) {
                   }
                 : { flex: 1 }
             }
+            key={item}
           >
             {item}
           </Text>
@@ -191,17 +206,18 @@ function ItemsTable({ items }: any) {
           padding: "0px 0px 16px 0px",
         }}
       >
-        {items.map((values: any) => (
+        {items.map((item: any) => (
           <View
             style={{
               display: "flex",
               flexDirection: "row",
               gap: "8px",
               padding: "4px 32px 4px 32px",
-              backgroundColor: items.indexOf(values) % 2 > 0 ? "#f8f8fa" : "",
+              backgroundColor: items.indexOf(item) % 2 > 0 ? "#f8f8fa" : "",
             }}
+            key={item.name}
           >
-            {values.map((value: any) => (
+            {/* {values.map((value: any) => (
               <Text
                 style={
                   values.indexOf(value) === 0
@@ -214,7 +230,18 @@ function ItemsTable({ items }: any) {
               >
                 {value}
               </Text>
-            ))}
+            ))} */}
+            <Text
+              style={{
+                flexBasis: "50%",
+                flexGrow: 0,
+              }}
+            >
+              {item.name}
+            </Text>
+            <Text style={{ flex: 1 }}>{item.ammount}</Text>
+            <Text style={{ flex: 1 }}>{item.price}</Text>
+            <Text style={{ flex: 1 }}>{item.total}</Text>
           </View>
         ))}
       </View>

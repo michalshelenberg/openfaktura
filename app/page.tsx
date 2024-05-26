@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <header className="w-dvw h-dvh flex">
-      <div className="flex-1 flex flex-col items-center gap-8 justify-center">
+      <div className="flex-1 flex flex-col items-center gap-8 p-4 justify-center">
         <p>Faktura online bez registrace a zcela zdarma</p>
         <Link
           href={"/editor"}

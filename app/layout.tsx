@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import AppsIcon from "@mui/icons-material/Apps";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +23,9 @@ export default function RootLayout({
         <div className="flex flex-row justify-between bg-black p-4 text-white">
           <p className="font-bold">InFaktura</p>
           <nav>
-            <AppsIcon />
+            <Link href={"/dashboard"}>
+              <AppsIcon />
+            </Link>
           </nav>
         </div>
         {children}

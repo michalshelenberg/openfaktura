@@ -1,7 +1,7 @@
 "use client";
 
-import SwipeableTextMobileStepper from "@/components/editor";
+import Editor from "@/components/editor";
 
 export default function Page() {
-  return <SwipeableTextMobileStepper />;
+  return <Editor />;
 }

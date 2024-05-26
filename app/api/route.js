@@ -2,11 +2,17 @@ import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import * as request from "request";
 
-export async function GET() {
-  const data = await getData("Greenpeace");
-  console.log(data);
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+  const search = searchParams.get("search");
 
-  return NextResponse.json(data, { status: 200 });
+  const data = await getData(search);
+
+  const result = data.map((company) => {
+    return { label: company["Název subjektu:"], ico: company["IČO:"] };
+  });
+
+  return NextResponse.json(result, { status: 200 });
 }
 
 function getData(companyName) {
