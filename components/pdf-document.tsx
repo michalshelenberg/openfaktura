@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import { billFrom } from "./editor/bill-from";
 
 Font.register({
   family: "Inter-Regular",
@@ -51,6 +52,19 @@ const styles = StyleSheet.create({
   },
 });
 
+function Placeholder() {
+  return (
+    <View
+      style={{
+        width: `${Math.random() * 100}%`,
+        height: "12px",
+        backgroundColor: "#d4d4d4",
+        borderRadius: "4px",
+      }}
+    />
+  );
+}
+
 // TODO: Do not forget to remove
 const dummy_items = [
   ["Služby za květen", 206, 80, 206 * 80],
@@ -77,16 +91,24 @@ export default function PDFDocument({ form }: { form: Form }) {
             </Text>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Evidenční číslo:</Text>
-              <Text>{form.number}</Text>
+              {form.number ? <Text>{form.number}</Text> : <Placeholder />}
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>Datum vystavení:</Text>
-                <Text>{form.issueDate?.format("DD.MM.YYYY")}</Text>
+                {form.issueDate ? (
+                  <Text>{form.issueDate?.format("DD.MM.YYYY")}</Text>
+                ) : (
+                  <Placeholder />
+                )}
               </View>
               <View style={styles.group}>
-                <Text style={styles.font_bold}>Datum vystavení:</Text>
-                <Text>{form.issueDate?.format("DD.MM.YYYY")}</Text>
+                <Text style={styles.font_bold}>Datum splatnosti:</Text>
+                {form.dueDate ? (
+                  <Text>{form.dueDate?.format("DD.MM.YYYY")}</Text>
+                ) : (
+                  <Placeholder />
+                )}
               </View>
             </View>
           </View>
@@ -96,15 +118,35 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Dodavatel:</Text>
-              <Text>{form.billFrom.name}</Text>
-              <Text>{form.billFrom.street}</Text>
-              <Text>{`${form.billFrom.postalCode} ${form.billFrom.city}`}</Text>
-              <Text>{form.billFrom.country}</Text>
+              {form.billFrom.label ? (
+                <Text>{form.billFrom.label}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billFrom.street ? (
+                <Text>{form.billFrom.street}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billFrom.postalCode ? (
+                <Text>{`${form.billFrom.postalCode} ${form.billFrom.city}`}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billFrom.country ? (
+                <Text>{form.billFrom.country}</Text>
+              ) : (
+                <Placeholder />
+              )}
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                <Text>{form.billFrom.ico}</Text>
+                {form.billFrom.ico ? (
+                  <Text>{form.billFrom.ico}</Text>
+                ) : (
+                  <Placeholder />
+                )}
               </View>
               {form.billFrom.dic && (
                 <View style={styles.group}>
@@ -117,15 +159,35 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Odběratel:</Text>
-              <Text>{form.billTo.name}</Text>
-              <Text>{form.billTo.street}</Text>
-              <Text>{`${form.billTo.postalCode} ${form.billTo.city}`}</Text>
-              <Text>{form.billTo.country}</Text>
+              {form.billTo.label ? (
+                <Text>{form.billTo.label}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billTo.street ? (
+                <Text>{form.billTo.street}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billTo.postalCode ? (
+                <Text>{`${form.billTo.postalCode} ${form.billTo.city}`}</Text>
+              ) : (
+                <Placeholder />
+              )}
+              {form.billTo.country ? (
+                <Text>{form.billTo.country}</Text>
+              ) : (
+                <Placeholder />
+              )}
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                <Text>{form.billTo.ico}</Text>
+                {form.billTo.ico ? (
+                  <Text>{form.billTo.ico}</Text>
+                ) : (
+                  <Placeholder />
+                )}
               </View>
               {form.billTo.dic && (
                 <View style={styles.group}>
@@ -147,7 +209,11 @@ export default function PDFDocument({ form }: { form: Form }) {
             </View>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Číslo účtu:</Text>
-              <Text>{form.bankAccountNumber}</Text>
+              {form.bankAccountNumber ? (
+                <Text>{form.bankAccountNumber}</Text>
+              ) : (
+                <Placeholder />
+              )}
             </View>
             <View style={styles.group}>
               {/* <Text style={styles.font_bold}>Variabilní symbol:</Text>

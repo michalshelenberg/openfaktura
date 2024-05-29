@@ -1,3 +1,5 @@
+"use client";
+
 import { basicInformation } from "@/components/editor/basic-information";
 import { billFrom } from "@/components/editor/bill-from";
 import PDFPreview from "@/components/pdf-preview";
@@ -12,6 +14,17 @@ import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
 import { useState } from "react";
 import SwipeableViews from "react-swipeable-views";
+import { useDebounce } from "@react-hook/debounce";
+
+export interface InvoiceBusiness {
+  label: string;
+  ico: string;
+  dic: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+}
 
 export interface Form {
   type: string;
@@ -20,24 +33,8 @@ export interface Form {
   dueDate: Dayjs | null;
   paymentMethod: string;
   bankAccountNumber: string;
-  billFrom: {
-    name: string;
-    ico: string;
-    dic: string;
-    street: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
-  billTo: {
-    name: string;
-    ico: string;
-    dic: string;
-    street: string;
-    city: string;
-    postalCode: string;
-    country: string;
-  };
+  billFrom: InvoiceBusiness;
+  billTo: InvoiceBusiness;
   items: Array<{ name: string; price: string; ammount: string; total: string }>;
 }
 
@@ -48,33 +45,36 @@ export default function Editor() {
   const [activeStep, setActiveStep] = useState(0);
   const maxSteps = steps.length;
 
-  const [form, setForm] = useState<Form>({
-    type: "bez-dph",
-    number: "",
-    issueDate: dayjs(),
-    dueDate: dayjs("2022-04-17"),
-    paymentMethod: "Bankovní převod",
-    bankAccountNumber: "",
-    billFrom: {
-      name: "",
-      ico: "",
-      dic: "",
-      street: "",
-      city: "",
-      postalCode: "",
-      country: "",
+  const [form, setForm] = useDebounce<Form>(
+    {
+      type: "bez-dph",
+      number: `${dayjs().format("YYYYMM")}0001`,
+      issueDate: dayjs(),
+      dueDate: dayjs().add(14, "day"),
+      paymentMethod: "Bankovní převod",
+      bankAccountNumber: "",
+      billFrom: {
+        label: "",
+        ico: "",
+        dic: "",
+        street: "",
+        city: "",
+        postalCode: "",
+        country: "",
+      },
+      billTo: {
+        label: "",
+        ico: "",
+        dic: "",
+        street: "",
+        city: "",
+        postalCode: "",
+        country: "",
+      },
+      items: [],
     },
-    billTo: {
-      name: "",
-      ico: "",
-      dic: "",
-      street: "",
-      city: "",
-      postalCode: "",
-      country: "",
-    },
-    items: [],
-  });
+    500
+  );
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -115,10 +115,8 @@ export default function Editor() {
           {steps.map((step, index) => (
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                // <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <step.body form={form} setForm={setForm} />
-              ) : // </div>
-              null}
+              ) : null}
             </div>
           ))}
         </SwipeableViews>

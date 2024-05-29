@@ -4,18 +4,20 @@ import * as request from "request";
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
-  const search = searchParams.get("search");
+  const label = searchParams.get("label");
 
-  const data = await getData(search);
+  if (label) {
+    const data = await searchJustice(label);
 
-  const result = data.map((company) => {
-    return { label: company["Název subjektu:"], ico: company["IČO:"] };
-  });
+    const result = data.map((business) => {
+      return { label: business["Název subjektu:"], ico: business["IČO:"] };
+    });
 
-  return NextResponse.json(result, { status: 200 });
+    return NextResponse.json(result, { status: 200 });
+  }
 }
 
-function getData(companyName) {
+function searchJustice(companyName) {
   return new Promise((resolve, reject) => {
     request(
       "https://or.justice.cz/ias/ui/rejstrik-dotaz?dotaz=" +
@@ -42,7 +44,3 @@ function getData(companyName) {
     );
   });
 }
-
-// getData("Seznam", function (data) {
-//   console.log(data);
-// });

@@ -1,4 +1,4 @@
-import { Form } from "@/components/editor";
+import { Form, InvoiceBusiness } from "@/components/editor";
 import { getData } from "@/lib/getData";
 import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material";
@@ -17,78 +17,70 @@ export const billFrom = {
     form: Form;
     setForm: Dispatch<SetStateAction<Form>>;
   }) => {
-    const [results, setResults] = useState([]);
+    const [options, setOptions] = useState([]);
+    const [autocomplete, setAutocomplete] = useState("");
 
+    // ERROR: COUSING THE /api?label= ERROR
     useEffect(() => {
-      fetch(`/api?search=${form.billFrom.name}`)
+      setForm({ ...form, billFrom: { ...form.billFrom, label: autocomplete } });
+
+      // TODO: USE METERIAL UI DEBOUNCE
+      fetch(`/api?label=${autocomplete}`)
         .then((response) => response.json())
-        .then((data) => setResults(data));
-    }, [form.billFrom.name]);
+        .then((data) => setOptions(data));
+    }, [autocomplete]);
 
     return (
       <div className="flex flex-col divide-y">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <Alert severity="info">
-            Vyhledávejte podle názvu podniku, <br />
-            vložte IČ a formulář se automaticky vyplní
+            <ul>
+              <li>Vyhledávejte podle názvu podniku</li>
+              <li>Vložte IČ a formulář se automaticky vyplní</li>
+            </ul>
           </Alert>
           <Autocomplete
-            disablePortal
-            options={results}
+            freeSolo
+            options={options}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Název"
-                variant="filled"
-                value={form.billFrom.name}
-                onChange={(event) =>
-                  setForm({
-                    ...form,
-                    billFrom: { ...form.billFrom, name: event.target.value },
-                  })
-                }
-              />
+              <TextField {...params} label="Název" variant="filled" />
             )}
+            inputValue={autocomplete}
+            onInputChange={(e, value) => setAutocomplete(value)}
+            onChange={async (e, value) => {
+              const wtf = JSON.stringify(value);
+              const wtf2 = JSON.parse(wtf);
+              const ico = wtf2.ico;
+
+              const data = await getData(ico);
+
+              setForm({ ...form, billFrom: data });
+            }}
           />
           <div className="flex flex-row gap-4">
             <TextField
+              fullWidth
               label="IČO"
               variant="filled"
-              value={form.billFrom.ico}
+              defaultValue={form.billFrom.ico}
               onChange={(event) =>
                 setForm({
                   ...form,
                   billFrom: { ...form.billFrom, ico: event.target.value },
                 })
               }
-              className="flex-1"
             />
             <div className="flex items-center justify-center">
               <IconButton
                 size={"large"}
                 onClick={async () => {
-                  const data = await getData(form.billFrom.ico);
+                  const wtf = JSON.stringify(form.billFrom.ico);
+                  const wtf2 = JSON.parse(wtf);
+                  const ico = wtf2.ico;
 
-                  const street = data.sidlo.nazevUlice ?? data.sidlo.nazevObce;
-                  const unitNo = `${data.sidlo.cisloDomovni}${
-                    data.sidlo.cisloOrientacni
-                      ? "/" + data.sidlo.cisloOrientacni
-                      : ""
-                  }`;
+                  const data = await getData(ico);
 
-                  setForm({
-                    ...form,
-                    billFrom: {
-                      ...form.billFrom,
-                      name: data.obchodniJmeno,
-                      ico: data.ico,
-                      dic: data.dic,
-                      street: `${street} ${unitNo}`,
-                      city: data.sidlo.nazevObce,
-                      postalCode: data.sidlo.psc,
-                      country: data.sidlo.nazevStatu,
-                    },
-                  });
+                  setForm({ ...form, billFrom: data });
                 }}
               >
                 <Search />
