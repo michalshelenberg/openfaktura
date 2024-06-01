@@ -1,4 +1,4 @@
-import { Form, InvoiceBusiness } from "@/components/editor";
+import { Form } from "@/components/editor";
 import { getData } from "@/lib/getData";
 import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material";
@@ -6,7 +6,7 @@ import Alert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
 import IconButton from "@mui/material/IconButton";
 import "dayjs/locale/cs";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export const billFrom = {
   label: "2. Dodavatel",
@@ -19,16 +19,6 @@ export const billFrom = {
   }) => {
     const [options, setOptions] = useState([]);
     const [autocomplete, setAutocomplete] = useState("");
-
-    // ERROR: COUSING THE /api?label= ERROR
-    useEffect(() => {
-      setForm({ ...form, billFrom: { ...form.billFrom, label: autocomplete } });
-
-      // TODO: USE METERIAL UI DEBOUNCE
-      fetch(`/api?label=${autocomplete}`)
-        .then((response) => response.json())
-        .then((data) => setOptions(data));
-    }, [autocomplete]);
 
     return (
       <div className="flex flex-col divide-y">
@@ -46,7 +36,20 @@ export const billFrom = {
               <TextField {...params} label="Název" variant="filled" />
             )}
             inputValue={autocomplete}
-            onInputChange={(e, value) => setAutocomplete(value)}
+            onInputChange={(e, value) => {
+              setAutocomplete(value);
+
+              setForm({
+                ...form,
+                billFrom: { ...form.billFrom, label: autocomplete },
+              });
+
+              if (value.length > 2) {
+                fetch(`/api?label=${autocomplete}`)
+                  .then((response) => response.json())
+                  .then((data) => setOptions(data));
+              }
+            }}
             onChange={async (e, value) => {
               const wtf = JSON.stringify(value);
               const wtf2 = JSON.parse(wtf);

@@ -1,20 +1,15 @@
 "use client";
 
-import { basicInformation } from "@/components/editor/basic-information";
+import { basicData } from "@/components/editor/basic-data";
 import { billFrom } from "@/components/editor/bill-from";
 import PDFPreview from "@/components/pdf-preview";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Button from "@mui/material/Button";
-import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/material/styles";
+import { useDebounce } from "@react-hook/debounce";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
-import { useState } from "react";
-import SwipeableViews from "react-swipeable-views";
-import { useDebounce } from "@react-hook/debounce";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export interface InvoiceBusiness {
   label: string;
@@ -38,13 +33,9 @@ export interface Form {
   items: Array<{ name: string; price: string; ammount: string; total: string }>;
 }
 
-const steps = [basicInformation, billFrom];
+const steps = [basicData, billFrom];
 
 export default function Editor() {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = steps.length;
-
   const [form, setForm] = useDebounce<Form>(
     {
       type: "bez-dph",
@@ -76,76 +67,19 @@ export default function Editor() {
     500
   );
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
   return (
     <div className="flex flex-row flex-1">
-      <div className="flex-1 flex flex-col select-none">
-        <Paper
-          square
-          elevation={0}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            height: 50,
-          }}
-          className="border-b p-4"
-        >
-          <Typography sx={{ fontWeight: "bold" }}>
-            {steps[activeStep].label}
-          </Typography>
-        </Paper>
-        <SwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-          className="flex-1"
-        >
-          {steps.map((step, index) => (
-            <div key={step.label}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <step.body form={form} setForm={setForm} />
-              ) : null}
-            </div>
-          ))}
-        </SwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          activeStep={activeStep}
-          position="static"
-          nextButton={
-            <Button onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-              Pokračovat
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button onClick={handleBack} disabled={activeStep === 0}>
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Zpět
-            </Button>
-          }
-        />
-      </div>
+      <Swiper
+        pagination={true}
+        modules={[Pagination]}
+        className="flex-1 flex flex-col select-none"
+      >
+        {steps.map((step) => (
+          <SwiperSlide key={step.label}>
+            <step.body form={form} setForm={setForm} key={step.label} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <PDFPreview form={form} />
     </div>
   );

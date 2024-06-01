@@ -10,11 +10,16 @@ export async function GET(req) {
     const data = await searchJustice(label);
 
     const result = data.map((business) => {
-      return { label: business["Název subjektu:"], ico: business["IČO:"] };
+      return {
+        label: business["Název subjektu:"].replace(/\'/g, '"'),
+        ico: business["IČO:"],
+      };
     });
 
     return NextResponse.json(result, { status: 200 });
   }
+
+  // return NextResponse.json({ message: "Fetch failed" }, { status: 400 });
 }
 
 function searchJustice(companyName) {

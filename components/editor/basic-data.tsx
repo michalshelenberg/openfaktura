@@ -1,13 +1,14 @@
 import { Form } from "@/components/editor";
+import DatePickers from "@/components/editor/date-pickers";
 import { TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import "dayjs/locale/cs";
 import { Dispatch, SetStateAction } from "react";
-import DatePickers from "@/components/editor/date-pickers";
 
-export const basicInformation = {
+export const basicData = {
   label: "1. Základní údaje",
   body: ({
     form,
@@ -16,7 +17,10 @@ export const basicInformation = {
     form: Form;
     setForm: Dispatch<SetStateAction<Form>>;
   }) => (
-    <div className="flex flex-col divide-y">
+    <div className="flex flex-col divide-y swiper-no-swiping">
+      <div className="p-4">
+        <p className="font-bold">1. Základní údaje</p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <FormControl variant="filled">
           <InputLabel id="type-select">Druh faktury</InputLabel>
@@ -47,7 +51,10 @@ export const basicInformation = {
             labelId="payment-method-label"
             value={form.paymentMethod}
             onChange={(event) =>
-              setForm({ ...form, paymentMethod: event.target.value as string })
+              setForm({
+                ...form,
+                paymentMethod: event.target.value as string,
+              })
             }
           >
             <MenuItem value={"Hotovost"}>Hotovost</MenuItem>

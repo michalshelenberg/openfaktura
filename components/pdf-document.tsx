@@ -7,7 +7,6 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { billFrom } from "./editor/bill-from";
 
 Font.register({
   family: "Inter-Regular",
