@@ -1,12 +1,12 @@
 import { Form } from "@/components/editor";
+import CustomAutocomplete from "@/components/editor/custom-autocomplete";
 import { getData } from "@/lib/getData";
 import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import Autocomplete from "@mui/material/Autocomplete";
 import IconButton from "@mui/material/IconButton";
 import "dayjs/locale/cs";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export const billFrom = {
   label: "2. Dodavatel",
@@ -17,9 +17,6 @@ export const billFrom = {
     form: Form;
     setForm: Dispatch<SetStateAction<Form>>;
   }) => {
-    const [options, setOptions] = useState([]);
-    const [autocomplete, setAutocomplete] = useState("");
-
     return (
       <div className="flex flex-col divide-y">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -29,37 +26,7 @@ export const billFrom = {
               <li>Vložte IČ a formulář se automaticky vyplní</li>
             </ul>
           </Alert>
-          <Autocomplete
-            freeSolo
-            options={options}
-            renderInput={(params) => (
-              <TextField {...params} label="Název" variant="filled" />
-            )}
-            inputValue={autocomplete}
-            onInputChange={(e, value) => {
-              setAutocomplete(value);
-
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, label: autocomplete },
-              });
-
-              if (value.length > 2) {
-                fetch(`/api?label=${autocomplete}`)
-                  .then((response) => response.json())
-                  .then((data) => setOptions(data));
-              }
-            }}
-            onChange={async (e, value) => {
-              const wtf = JSON.stringify(value);
-              const wtf2 = JSON.parse(wtf);
-              const ico = wtf2.ico;
-
-              const data = await getData(ico);
-
-              setForm({ ...form, billFrom: data });
-            }}
-          />
+          <CustomAutocomplete form={{ formData: form, setForm: setForm }} />
           <div className="flex flex-row gap-4">
             <TextField
               fullWidth
@@ -93,13 +60,9 @@ export const billFrom = {
           <TextField
             label="DIČ"
             variant="filled"
+            name="dic"
             value={form.billFrom.dic}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, dic: event.target.value },
-              })
-            }
+            // onChange={handleInputChange}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
