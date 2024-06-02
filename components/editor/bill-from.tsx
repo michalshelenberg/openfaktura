@@ -1,9 +1,7 @@
 import { Form } from "@/components/editor";
 import CustomAutocomplete from "@/components/editor/custom-autocomplete";
-// import { getData } from "@/lib/getData";
 import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import "dayjs/locale/cs";
 import { Dispatch, SetStateAction } from "react";
 
 export const billFrom = {
@@ -33,8 +31,11 @@ export const billFrom = {
               <li>Vložte IČ a formulář se automaticky vyplní</li>
             </ul>
           </Alert>
-          {/* Since I am not debouncing formData I can revert this CustomAutocomplete */}
-          <CustomAutocomplete form={{ formData: form, setForm: setForm }} />
+          <CustomAutocomplete
+            inputValue={form.billFrom.label}
+            form={form}
+            setForm={setForm}
+          />
           <TextField
             label="ICO"
             variant="filled"

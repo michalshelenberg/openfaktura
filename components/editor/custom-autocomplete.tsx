@@ -3,15 +3,18 @@ import { TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Dispatch, SetStateAction, useState } from "react";
 
+// Could be renamed to something like SearchBusinessAutocomplete...
+// Obviously needs debouncing (info. in MUI docs)
 export default function CustomAutocomplete({
+  inputValue,
   form,
+  setForm,
 }: {
-  form: { formData: Form; setForm: Dispatch<SetStateAction<Form>> };
+  inputValue: string;
+  form: Form;
+  setForm: Dispatch<SetStateAction<Form>>;
 }) {
   const [options, setOptions] = useState([]);
-  const [inputValue, setInputValue] = useState(""); // I would like to use defaultValue instead of inputValue, but Material UI complains that I am not using controlled Autocomplete
-
-  const { formData, setForm } = form;
 
   const handleChange = async (e: any, value: string | null) => {
     if (!value) return;
@@ -37,15 +40,13 @@ export default function CustomAutocomplete({
       country: data.sidlo.nazevStatu,
     };
 
-    setForm({ ...formData, billFrom: billFrom });
+    setForm({ ...form, billFrom: billFrom });
   };
 
   const handleInputChange = (e: any, value: string) => {
-    setInputValue(value);
-
     setForm({
-      ...formData,
-      billFrom: { ...formData.billFrom, label: value },
+      ...form,
+      billFrom: { ...form.billFrom, label: value },
     });
 
     if (value.length > 2) {
