@@ -3,9 +3,9 @@
 import { basicData } from "@/components/editor/basic-data";
 import { billFrom } from "@/components/editor/bill-from";
 import PDFPreview from "@/components/pdf-preview";
-import { useDebounce } from "@react-hook/debounce";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -15,7 +15,7 @@ export interface InvoiceBusiness {
   label: string;
   ico: string;
   dic: string;
-  addrLine1:string;
+  addrLine1: string;
   addrLine2: string;
   street?: string;
   city?: string;
@@ -38,40 +38,40 @@ export interface Form {
 const steps = [basicData, billFrom];
 
 export default function Editor() {
-  const [form, setForm] = useDebounce<Form>(
-    {
-      type: "bez-dph",
-      number: `${dayjs().format("YYYYMM")}0001`,
-      issueDate: dayjs(),
-      dueDate: dayjs().add(14, "day"),
-      paymentMethod: "Bankovní převod",
-      bankAccountNumber: "",
-      billFrom: {
-        label: "",
-        ico: "",
-        dic: "",
-        addrLine1: "",
-        addrLine2: "",
-        street: "",
-        city: "",
-        postalCode: "",
-        country: "",
-      },
-      billTo: {
-        label: "",
-        ico: "",
-        dic: "",
-        addrLine1: "",
-        addrLine2: "",
-        street: "",
-        city: "",
-        postalCode: "",
-        country: "",
-      },
-      items: [],
+  // Find different way to debounce re-render of PDF preview
+  // const [form, setForm] = useDebounce<Form>(
+
+  const [form, setForm] = useState<Form>({
+    type: "bez-dph",
+    number: `${dayjs().format("YYYYMM")}0001`,
+    issueDate: dayjs(),
+    dueDate: dayjs().add(14, "day"),
+    paymentMethod: "Bankovní převod",
+    bankAccountNumber: "",
+    billFrom: {
+      label: "",
+      ico: "",
+      dic: "",
+      addrLine1: "",
+      addrLine2: "",
+      street: "",
+      city: "",
+      postalCode: "",
+      country: "",
     },
-    500
-  );
+    billTo: {
+      label: "",
+      ico: "",
+      dic: "",
+      addrLine1: "",
+      addrLine2: "",
+      street: "",
+      city: "",
+      postalCode: "",
+      country: "",
+    },
+    items: [],
+  });
 
   return (
     <div className="flex flex-row flex-1">

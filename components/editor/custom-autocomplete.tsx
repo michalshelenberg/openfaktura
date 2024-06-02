@@ -8,10 +8,10 @@ export default function CustomAutocomplete({
 }: {
   form: { formData: Form; setForm: Dispatch<SetStateAction<Form>> };
 }) {
-  const { formData, setForm } = form;
-
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState(""); // I would like to use defaultValue instead of inputValue, but Material UI complains that I am not using controlled Autocomplete
+
+  const { formData, setForm } = form;
 
   const handleChange = async (e: any, value: string | null) => {
     if (!value) return;
@@ -22,8 +22,6 @@ export default function CustomAutocomplete({
     const data = await fetch(
       `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`
     ).then((res) => res.json());
-
-    console.log(data);
 
     const billFrom = {
       label: data.obchodniJmeno,

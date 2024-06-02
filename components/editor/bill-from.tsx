@@ -1,10 +1,8 @@
 import { Form } from "@/components/editor";
 import CustomAutocomplete from "@/components/editor/custom-autocomplete";
-import { getData } from "@/lib/getData";
-import { Search } from "@mui/icons-material";
+// import { getData } from "@/lib/getData";
 import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
 import "dayjs/locale/cs";
 import { Dispatch, SetStateAction } from "react";
 
@@ -17,6 +15,15 @@ export const billFrom = {
     form: Form;
     setForm: Dispatch<SetStateAction<Form>>;
   }) => {
+    const handleTextFieldChange = (event: any) => {
+      const billFrom = {
+        ...form.billFrom,
+        [event.target.name]: event.target.value,
+      };
+
+      setForm({ ...form, billFrom: billFrom });
+    };
+
     return (
       <div className="flex flex-col divide-y">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -26,89 +33,54 @@ export const billFrom = {
               <li>Vložte IČ a formulář se automaticky vyplní</li>
             </ul>
           </Alert>
+          {/* Since I am not debouncing formData I can revert this CustomAutocomplete */}
           <CustomAutocomplete form={{ formData: form, setForm: setForm }} />
-          <div className="flex flex-row gap-4">
-            <TextField
-              fullWidth
-              label="IČO"
-              variant="filled"
-              defaultValue={form.billFrom.ico}
-              onChange={(event) =>
-                setForm({
-                  ...form,
-                  billFrom: { ...form.billFrom, ico: event.target.value },
-                })
-              }
-            />
-            <div className="flex items-center justify-center">
-              <IconButton
-                size={"large"}
-                onClick={async () => {
-                  const wtf = JSON.stringify(form.billFrom.ico);
-                  const wtf2 = JSON.parse(wtf);
-                  const ico = wtf2.ico;
-
-                  const data = await getData(ico);
-
-                  setForm({ ...form, billFrom: data });
-                }}
-              >
+          <TextField
+            label="ICO"
+            variant="filled"
+            name="ico"
+            value={form.billFrom.ico}
+            onChange={handleTextFieldChange}
+          />
+          {/* <IconButton size={"large"} onClick={() => {}}>
                 <Search />
-              </IconButton>
-            </div>
-          </div>
+              </IconButton> */}
           <TextField
             label="DIČ"
             variant="filled"
             name="dic"
             value={form.billFrom.dic}
-            // onChange={handleInputChange}
+            onChange={handleTextFieldChange}
           />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <TextField
             label="Ulice"
             variant="filled"
-            value={form.billFrom.street}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, street: event.target.value },
-              })
-            }
+            name="addrLine1"
+            value={form.billFrom.addrLine1}
+            onChange={handleTextFieldChange}
           />
           <TextField
             label="Město"
             variant="filled"
-            value={form.billFrom.city}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, city: event.target.value },
-              })
-            }
+            name="addrLine2"
+            value={form.billFrom.addrLine2}
+            onChange={handleTextFieldChange}
           />
           <TextField
             label="PSČ"
             variant="filled"
+            name="postalCode"
             value={form.billFrom.postalCode}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, postalCode: event.target.value },
-              })
-            }
+            onChange={handleTextFieldChange}
           />
           <TextField
             label="Země"
             variant="filled"
+            name="country"
             value={form.billFrom.country}
-            onChange={(event) =>
-              setForm({
-                ...form,
-                billFrom: { ...form.billFrom, country: event.target.value },
-              })
-            }
+            onChange={handleTextFieldChange}
           />
         </div>
       </div>

@@ -1,5 +1,4 @@
 import Navigation from "@/components/navigation";
-import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -18,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("antialiased flex flex-col h-dvh", inter.className)}>
-        <Navigation />
-        {children}
+      <body className={inter.className}>
+        <div className="flex flex-col h-dvh">
+          <Navigation />
+          {children}
+        </div>
       </body>
     </html>
   );
