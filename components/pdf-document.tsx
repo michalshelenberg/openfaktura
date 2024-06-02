@@ -138,6 +138,9 @@ export default function PDFDocument({ form }: { form: Form }) {
                 <Placeholder />
               )}
             </View>
+            <View style={styles.group}>
+              <Text style={styles.font_bold}>Neplátce DPH</Text>
+            </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>

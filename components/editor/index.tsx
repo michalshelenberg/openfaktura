@@ -1,7 +1,9 @@
 "use client";
 
-import { basicData } from "@/components/editor/basic-data";
-import { billFrom } from "@/components/editor/bill-from";
+import { basicData } from "@/components/editor/slides/basic-information";
+import { billFrom } from "@/components/editor/slides/bill-from";
+import { billTo } from "@/components/editor/slides/bill-to";
+import { invoiceItems } from "@/components/editor/slides/invoice-items";
 import PDFPreview from "@/components/pdf-preview";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
@@ -35,7 +37,7 @@ export interface Form {
   items: Array<{ name: string; price: string; ammount: string; total: string }>;
 }
 
-const steps = [basicData, billFrom];
+const steps = [basicData, billFrom, billTo, invoiceItems];
 
 export default function Editor() {
   // Find different way to debounce re-render of PDF preview

@@ -4,12 +4,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Dispatch, SetStateAction, useState } from "react";
 
 // Could be renamed to something like SearchBusinessAutocomplete...
-// Obviously needs debouncing (info. in MUI docs)
+// Needs debouncing (info. in MUI docs)
 export default function CustomAutocomplete({
+  isFor,
   inputValue,
   form,
   setForm,
 }: {
+  isFor: "billFrom" | "billTo";
   inputValue: string;
   form: Form;
   setForm: Dispatch<SetStateAction<Form>>;
@@ -26,7 +28,7 @@ export default function CustomAutocomplete({
       `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`
     ).then((res) => res.json());
 
-    const billFrom = {
+    const formattedData = {
       label: data.obchodniJmeno,
       ico: data.ico,
       dic: data.dic,
@@ -40,13 +42,13 @@ export default function CustomAutocomplete({
       country: data.sidlo.nazevStatu,
     };
 
-    setForm({ ...form, billFrom: billFrom });
+    setForm({ ...form, [isFor]: formattedData });
   };
 
   const handleInputChange = (e: any, value: string) => {
     setForm({
       ...form,
-      billFrom: { ...form.billFrom, label: value },
+      [isFor]: { ...form[isFor], label: value },
     });
 
     if (value.length > 2) {

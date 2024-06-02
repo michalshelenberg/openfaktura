@@ -4,8 +4,8 @@ import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { Dispatch, SetStateAction } from "react";
 
-export const billFrom = {
-  label: "2. Dodavatel",
+export const billTo = {
+  label: "3. Odběratel",
   body: ({
     form,
     setForm,
@@ -14,12 +14,12 @@ export const billFrom = {
     setForm: Dispatch<SetStateAction<Form>>;
   }) => {
     const handleTextFieldChange = (event: any) => {
-      const billFrom = {
-        ...form.billFrom,
+      const billTo = {
+        ...form.billTo,
         [event.target.name]: event.target.value,
       };
 
-      setForm({ ...form, billFrom: billFrom });
+      setForm({ ...form, billTo: billTo });
     };
 
     return (
@@ -32,7 +32,8 @@ export const billFrom = {
             </ul>
           </Alert>
           <CustomAutocomplete
-            inputValue={form.billFrom.label}
+            isFor="billTo"
+            inputValue={form.billTo.label}
             form={form}
             setForm={setForm}
           />
@@ -40,7 +41,7 @@ export const billFrom = {
             label="ICO"
             variant="filled"
             name="ico"
-            value={form.billFrom.ico}
+            value={form.billTo.ico}
             onChange={handleTextFieldChange}
           />
           {/* <IconButton size={"large"} onClick={() => {}}>
@@ -50,7 +51,7 @@ export const billFrom = {
             label="DIČ"
             variant="filled"
             name="dic"
-            value={form.billFrom.dic}
+            value={form.billTo.dic}
             onChange={handleTextFieldChange}
           />
         </div>
@@ -59,28 +60,28 @@ export const billFrom = {
             label="Ulice"
             variant="filled"
             name="addrLine1"
-            value={form.billFrom.addrLine1}
+            value={form.billTo.addrLine1}
             onChange={handleTextFieldChange}
           />
           <TextField
             label="Město"
             variant="filled"
             name="addrLine2"
-            value={form.billFrom.addrLine2}
+            value={form.billTo.addrLine2}
             onChange={handleTextFieldChange}
           />
           <TextField
             label="PSČ"
             variant="filled"
             name="postalCode"
-            value={form.billFrom.postalCode}
+            value={form.billTo.postalCode}
             onChange={handleTextFieldChange}
           />
           <TextField
             label="Země"
             variant="filled"
             name="country"
-            value={form.billFrom.country}
+            value={form.billTo.country}
             onChange={handleTextFieldChange}
           />
         </div>
