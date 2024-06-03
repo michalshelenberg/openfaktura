@@ -17,6 +17,7 @@ Font.register({
   fonts: [{ src: "/fonts/Inter-Bold.ttf" }],
 });
 
+// NOT EVERYTHING NEEDS TO HAVE FLEX COLUMN
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Inter-Regular",
@@ -51,31 +52,34 @@ const styles = StyleSheet.create({
   },
 });
 
-function Placeholder() {
+function Placeholder({ text }: { text: string | undefined }) {
+  const width = Math.floor(Math.random() * (75 - 50 + 1)) + 50;
+
   return (
-    <View
-      style={{
-        width: `${Math.random() * 100}%`,
-        height: "12px",
-        backgroundColor: "#d4d4d4",
-        borderRadius: "4px",
-      }}
-    />
+    <>
+      {text ? (
+        <Text>{text}</Text>
+      ) : (
+        <View
+          style={{
+            width: `${width}%`,
+            height: "12px",
+            backgroundColor: "#d4d4d4",
+            borderRadius: "4px",
+          }}
+        />
+      )}
+    </>
   );
 }
 
-// TODO: Do not forget to remove
-const dummy_items = [
-  ["Služby za květen", 206, 80, 206 * 80],
-  ["Doprava", 206, 80, 206 * 80],
-];
-
-// TODO: Add TypeScript
 export default function PDFDocument({ form }: { form: Form }) {
+  const { number, issueDate, dueDate, billFrom, billTo } = form;
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Invoice header */}
+        {/* Header */}
         <View
           style={{
             ...styles.section,
@@ -90,111 +94,75 @@ export default function PDFDocument({ form }: { form: Form }) {
             </Text>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Evidenční číslo:</Text>
-              {form.number ? <Text>{form.number}</Text> : <Placeholder />}
+              <Placeholder text={number} />
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>Datum vystavení:</Text>
-                {form.issueDate ? (
-                  <Text>{form.issueDate?.format("DD.MM.YYYY")}</Text>
-                ) : (
-                  <Placeholder />
-                )}
+                <Placeholder text={issueDate?.format("DD.MM.YYYY")} />
               </View>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>Datum splatnosti:</Text>
-                {form.dueDate ? (
-                  <Text>{form.dueDate?.format("DD.MM.YYYY")}</Text>
-                ) : (
-                  <Placeholder />
-                )}
+                <Placeholder text={dueDate?.format("DD.MM.YYYY")} />
               </View>
             </View>
           </View>
         </View>
-        {/* Bill from, bill to */}
         <View style={styles.section}>
+          {/* Bill from */}
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Dodavatel:</Text>
-              {form.billFrom.label ? (
-                <Text>{form.billFrom.label}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billFrom.street ? (
-                <Text>{form.billFrom.street}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billFrom.postalCode ? (
-                <Text>{`${form.billFrom.postalCode} ${form.billFrom.city}`}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billFrom.country ? (
-                <Text>{form.billFrom.country}</Text>
-              ) : (
-                <Placeholder />
-              )}
-            </View>
-            <View style={styles.group}>
+              <Placeholder text={billFrom.label} />
+              <Placeholder text={billFrom.street} />
+              <Placeholder
+                text={
+                  billFrom.postalCode && billFrom.city
+                    ? `${billFrom.postalCode} ${billFrom.city}`
+                    : ""
+                }
+              />
+              <Placeholder text={billFrom.country} />
               <Text style={styles.font_bold}>Neplátce DPH</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                {form.billFrom.ico ? (
-                  <Text>{form.billFrom.ico}</Text>
-                ) : (
-                  <Placeholder />
-                )}
+                <Placeholder text={billFrom.ico} />
               </View>
-              {form.billFrom.dic && (
+              {billFrom.dic && (
                 <View style={styles.group}>
                   <Text style={styles.font_bold}>DIČ</Text>
-                  <Text>{form.billFrom.dic}</Text>
+                  <Text>{billFrom.dic}</Text>
                 </View>
               )}
             </View>
           </View>
+          {/* Bill to */}
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Odběratel:</Text>
-              {form.billTo.label ? (
-                <Text>{form.billTo.label}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billTo.street ? (
-                <Text>{form.billTo.street}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billTo.postalCode ? (
-                <Text>{`${form.billTo.postalCode} ${form.billTo.city}`}</Text>
-              ) : (
-                <Placeholder />
-              )}
-              {form.billTo.country ? (
-                <Text>{form.billTo.country}</Text>
-              ) : (
-                <Placeholder />
-              )}
+              <Placeholder text={billTo.label} />
+              <Placeholder text={billTo.street} />
+              <Placeholder
+                text={
+                  billTo.postalCode && billTo.city
+                    ? `${billTo.postalCode} ${billTo.city}`
+                    : ""
+                }
+              />
+              <Placeholder text={billTo.country} />
+              <Text>&nbsp;</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                {form.billTo.ico ? (
-                  <Text>{form.billTo.ico}</Text>
-                ) : (
-                  <Placeholder />
-                )}
+                <Placeholder text={billTo.ico} />
               </View>
-              {form.billTo.dic && (
+              {billTo.dic && (
                 <View style={styles.group}>
                   <Text style={styles.font_bold}>DIČ</Text>
-                  <Text>{form.billTo.dic}</Text>
+                  <Text>{billTo.dic}</Text>
                 </View>
               )}
             </View>
@@ -211,20 +179,10 @@ export default function PDFDocument({ form }: { form: Form }) {
             </View>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Číslo účtu:</Text>
-              {form.bankAccountNumber ? (
-                <Text>{form.bankAccountNumber}</Text>
-              ) : (
-                <Placeholder />
-              )}
+              <Placeholder text={form.bankAccountNumber} />
             </View>
-            <View style={styles.group}>
-              {/* <Text style={styles.font_bold}>Variabilní symbol:</Text>
-              <Text>2024001</Text> */}
-            </View>
-            <View style={styles.group}>
-              {/* <Text style={styles.font_bold}>Konstantní symbol:</Text>
-              <Text>2024001</Text> */}
-            </View>
+            <View style={styles.group}></View>
+            <View style={styles.group}></View>
           </View>
         </View>
       </Page>
@@ -233,7 +191,15 @@ export default function PDFDocument({ form }: { form: Form }) {
 }
 
 function ItemsTable({ items }: any) {
-  const headerColumns = ["Název", "Cena", "Množství", "Celkem"];
+  // const formatter = new Intl.NumberFormat("en-US", {
+  //   style: "currency",
+  //   currency: "USD",
+  // });
+
+  const formatter = new Intl.NumberFormat("cs-CZ", {
+    style: "currency",
+    currency: "CZK",
+  });
 
   return (
     <>
@@ -242,22 +208,21 @@ function ItemsTable({ items }: any) {
         style={{
           display: "flex",
           flexDirection: "row",
-          gap: "8px",
           padding: "8px 32px 8px 32px",
           backgroundColor: "#f8f8fa",
           textTransform: "uppercase",
           ...styles.font_bold,
         }}
       >
-        {["Název", "Cena", "Množství", "Celkem"].map((item) => (
+        {["Název", "Množství", "Cena", "Celkem"].map((item, index) => (
           <Text
             style={
-              headerColumns.indexOf(item) === 0
+              index === 0
                 ? {
                     flexBasis: "50%",
                     flexGrow: 0,
                   }
-                : { flex: 1 }
+                : { flex: 1, textAlign: "right" }
             }
             key={item}
           >
@@ -285,20 +250,6 @@ function ItemsTable({ items }: any) {
             }}
             key={item.name}
           >
-            {/* {values.map((value: any) => (
-              <Text
-                style={
-                  values.indexOf(value) === 0
-                    ? {
-                        flexBasis: "50%",
-                        flexGrow: 0,
-                      }
-                    : { flex: 1, textAlign: "right" }
-                }
-              >
-                {value}
-              </Text>
-            ))} */}
             <Text
               style={{
                 flexBasis: "50%",
@@ -307,9 +258,13 @@ function ItemsTable({ items }: any) {
             >
               {item.name}
             </Text>
-            <Text style={{ flex: 1 }}>{item.ammount}</Text>
-            <Text style={{ flex: 1 }}>{item.price}</Text>
-            <Text style={{ flex: 1 }}>{item.total}</Text>
+            <Text style={{ flex: 1, textAlign: "right" }}>{item.ammount}</Text>
+            <Text style={{ flex: 1, textAlign: "right" }}>
+              {formatter.format(item.price)}
+            </Text>
+            <Text style={{ flex: 1, textAlign: "right" }}>
+              {formatter.format(item.total)}
+            </Text>
           </View>
         ))}
       </View>
@@ -320,12 +275,15 @@ function ItemsTable({ items }: any) {
           marginLeft: "50%",
           padding: "16px 32px 0px 0px",
           borderTop: "1px solid black",
-          display: "flex",
-          flexDirection: "row",
+          textAlign: "right",
         }}
       >
-        <Text style={styles.font_bold}>Celkem k úhradě:</Text>
-        <Text style={{ flex: 1, textAlign: "right" }}>20 000 Kč</Text>
+        {/* <Text style={styles.font_bold}>Celkem k úhradě:</Text> */}
+        <Text style={{ textAlign: "right", ...styles.font_bold }}>
+          {formatter.format(
+            items.reduce((sum: any, item: any) => sum + parseInt(item.total), 0)
+          )}
+        </Text>
       </View>
     </>
   );

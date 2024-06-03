@@ -1,7 +1,9 @@
 import { Form } from "@/components/editor";
 import CustomAutocomplete from "@/components/editor/custom-autocomplete";
+import { Search } from "@mui/icons-material";
 import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
 import { Dispatch, SetStateAction } from "react";
 
 export const billFrom = {
@@ -23,7 +25,8 @@ export const billFrom = {
     };
 
     return (
-      <div className="flex flex-col divide-y">
+      <div className="divide-y">
+        <p className="p-4 font-bold">2. Dodavatel</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <Alert severity="info">
             <ul>
@@ -37,16 +40,44 @@ export const billFrom = {
             form={form}
             setForm={setForm}
           />
-          <TextField
-            label="ICO"
-            variant="filled"
-            name="ico"
-            value={form.billFrom.ico}
-            onChange={handleTextFieldChange}
-          />
-          {/* <IconButton size={"large"} onClick={() => {}}>
-                <Search />
-              </IconButton> */}
+          <div className="flex flex-row gap-4 items-center justify-center">
+            <TextField
+              label="ICO"
+              variant="filled"
+              name="ico"
+              value={form.billFrom.ico}
+              onChange={handleTextFieldChange}
+              className="flex-1"
+            />
+            <IconButton
+              size={"large"}
+              onClick={async () => {
+                const data = await fetch(
+                  `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${form.billFrom.ico}`
+                ).then((res) => res.json());
+
+                let street = data.sidlo.nazevUlice ?? data.sidlo.nazevObce;
+                street += " " + data.sidlo.cisloDomovni;
+                street += data.sidlo.cisloOrientacni
+                  ? "/" + data.sidlo.cisloOrientacni
+                  : "";
+
+                const billFrom = {
+                  label: data.obchodniJmeno,
+                  ico: data.ico,
+                  dic: data.dic,
+                  street: street,
+                  city: data.sidlo.nazevObce,
+                  postalCode: data.sidlo.psc,
+                  country: data.sidlo.nazevStatu,
+                };
+
+                setForm({ ...form, billFrom: billFrom });
+              }}
+            >
+              <Search />
+            </IconButton>
+          </div>
           <TextField
             label="DIČ"
             variant="filled"
@@ -60,14 +91,14 @@ export const billFrom = {
             label="Ulice"
             variant="filled"
             name="addrLine1"
-            value={form.billFrom.addrLine1}
+            value={form.billFrom.street}
             onChange={handleTextFieldChange}
           />
           <TextField
             label="Město"
             variant="filled"
             name="addrLine2"
-            value={form.billFrom.addrLine2}
+            value={form.billFrom.city}
             onChange={handleTextFieldChange}
           />
           <TextField

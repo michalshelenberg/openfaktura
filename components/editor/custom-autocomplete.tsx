@@ -28,21 +28,23 @@ export default function CustomAutocomplete({
       `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`
     ).then((res) => res.json());
 
-    const formattedData = {
+    let street = data.sidlo.nazevUlice ?? data.sidlo.nazevObce;
+    street += " " + data.sidlo.cisloDomovni;
+    street += data.sidlo.cisloOrientacni
+      ? "/" + data.sidlo.cisloOrientacni
+      : "";
+
+    const formatData = {
       label: data.obchodniJmeno,
       ico: data.ico,
       dic: data.dic,
-      addrLine1:
-        (data.sidlo.nazevUlice ?? data.sidlo.nazevObce) +
-        " " +
-        data.sidlo.cisloDomovni +
-        (data.sidlo.cisloOrientacni && "/" + data.sidlo.cisloOrientacni),
-      addrLine2: `${data.sidlo.psc} ${data.sidlo.nazevObce}`,
+      street: street,
+      city: data.sidlo.nazevObce,
       postalCode: data.sidlo.psc,
       country: data.sidlo.nazevStatu,
     };
 
-    setForm({ ...form, [isFor]: formattedData });
+    setForm({ ...form, [isFor]: formatData });
   };
 
   const handleInputChange = (e: any, value: string) => {

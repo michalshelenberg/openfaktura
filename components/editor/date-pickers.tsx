@@ -1,14 +1,13 @@
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useRef, useState } from "react";
+import { Form } from "@/components/editor";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { Form } from "@/components/editor";
-import { Dispatch, SetStateAction } from "react";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import dayjs, { Dayjs } from "dayjs";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 export default function DatePickers({
   form,
@@ -62,9 +61,10 @@ export default function DatePickers({
           format="DD.MM.YYYY"
           value={issueDate}
           onChange={handleIssueDateChange}
+          className="swiper-no-swiping"
         />
         <div className="flex flex-row gap-4">
-          <FormControl variant="filled" className="flex-1">
+          <FormControl variant="filled" className="flex-1 swiper-no-swiping">
             <InputLabel id="due-select-label">Splatnost</InputLabel>
             <Select
               label="Splatnost"
@@ -89,7 +89,7 @@ export default function DatePickers({
             onChange={handleDueDateChange}
             // ref={dueDateRef}
             inputRef={dueDateRef}
-            className="flex-1"
+            className="flex-1 swiper-no-swiping"
           />
         </div>
       </LocalizationProvider>

@@ -17,10 +17,8 @@ export interface InvoiceBusiness {
   label: string;
   ico: string;
   dic: string;
-  addrLine1: string;
-  addrLine2: string;
-  street?: string;
-  city?: string;
+  street: string;
+  city: string;
   postalCode: string;
   country: string;
 }
@@ -54,8 +52,6 @@ export default function Editor() {
       label: "",
       ico: "",
       dic: "",
-      addrLine1: "",
-      addrLine2: "",
       street: "",
       city: "",
       postalCode: "",
@@ -65,8 +61,6 @@ export default function Editor() {
       label: "",
       ico: "",
       dic: "",
-      addrLine1: "",
-      addrLine2: "",
       street: "",
       city: "",
       postalCode: "",

@@ -17,12 +17,12 @@ export const basicData = {
     form: Form;
     setForm: Dispatch<SetStateAction<Form>>;
   }) => (
-    <div className="flex flex-col divide-y swiper-no-swiping">
+    <div className="flex flex-col divide-y">
       <div className="p-4">
         <p className="font-bold">1. Základní údaje</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-        <FormControl variant="filled">
+        <FormControl variant="filled" className="swiper-no-swiping">
           <InputLabel id="type-select">Druh faktury</InputLabel>
           <Select
             label="Druh faktury"
@@ -44,7 +44,7 @@ export const basicData = {
       </div>
       <DatePickers form={form} setForm={setForm} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-        <FormControl variant="filled">
+        <FormControl variant="filled" className="swiper-no-swiping">
           <InputLabel id="payment-method-label">Forma úhrady</InputLabel>
           <Select
             label="Forma úhrady"

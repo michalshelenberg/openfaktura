@@ -1,6 +1,5 @@
 import { Form } from "@/components/editor";
 import { Button, TextField } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,13 +21,17 @@ export const invoiceItems = {
       event.preventDefault();
 
       const formData = new FormData(event.currentTarget);
+
       const items = [
         ...form.items,
         {
           name: formData.get("name") as string,
           ammount: formData.get("ammount") as string,
           price: formData.get("price") as string,
-          total: "123",
+          total: (
+            parseInt(formData.get("ammount") as string) *
+            parseInt(formData.get("price") as string)
+          ).toString(),
         },
       ];
 
@@ -56,9 +59,9 @@ export const invoiceItems = {
             Přidat
           </Button>
         </form>
-        <div className="p-4">
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        {form.items.length > 0 && (
+          <TableContainer sx={{ p: 2 }}>
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Název položky</TableCell>
@@ -84,7 +87,7 @@ export const invoiceItems = {
               </TableBody>
             </Table>
           </TableContainer>
-        </div>
+        )}
       </div>
     );
   },

@@ -14,12 +14,10 @@ const PDFViewer = dynamic(
 
 export default function PDFPreview({ form }: { form: Form }) {
   return (
-    <PDFViewer
-      style={{ height: "100%", width: "100%" }}
-      showToolbar={false}
-      className="hidden flex-1 md:block"
-    >
-      <PDFDocument form={form} />
-    </PDFViewer>
+    <div className="hidden flex-1 md:block">
+      <PDFViewer style={{ height: "100%", width: "100%" }} showToolbar={false}>
+        <PDFDocument form={form} />
+      </PDFViewer>
+    </div>
   );
 }
