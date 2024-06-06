@@ -23,7 +23,9 @@ export default function DatePickers({
   );
   const dueDateRef = useRef<any>();
 
-  const handleIssueDateChange = (newIssueDate: Dayjs) => {
+  const handleIssueDateChange = (newIssueDate: Dayjs | null) => {
+    if (!newIssueDate) return;
+
     setIssueDate(newIssueDate);
     if (dueSelect !== "custom-date") {
       const dueSelectObject = JSON.parse(dueSelect);
@@ -31,7 +33,9 @@ export default function DatePickers({
     }
   };
 
-  const handleDueDateChange = (newDueDate: Dayjs) => {
+  const handleDueDateChange = (newDueDate: Dayjs | null) => {
+    if (!newDueDate) return;
+
     setDueDate(newDueDate);
     setDueSelect("custom-date");
   };
@@ -87,7 +91,6 @@ export default function DatePickers({
             format="DD.MM.YYYY"
             value={dueDate}
             onChange={handleDueDateChange}
-            // ref={dueDateRef}
             inputRef={dueDateRef}
             className="flex-1 swiper-no-swiping"
           />
