@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.michalshelenberg.infaktura.twa",
+      "sha256_cert_fingerprints": [
+        "ED:ED:D1:F2:48:33:9F:24:EE:E2:E8:2A:5F:D2:DF:7A:01:EC:3A:CB:0E:51:77:ED:8F:41:43:58:D1:BE:7E:36"
+      ]
+    }
+  }
+]
