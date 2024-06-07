@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -14,13 +14,13 @@ export default function Home() {
         </Link>
       </div>
       <div className="relative hidden flex-1 md:block">
-        <Image
+        {/* <Image
           src={"/images/header_image.jpg"}
           alt=""
           fill
           objectFit="cover"
           priority
-        />
+        /> */}
       </div>
     </header>
   );
