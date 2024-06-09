@@ -1,10 +1,10 @@
 import { Form } from "@/components/editor";
-import { TextField } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 // Could be renamed to something like SearchBusinessAutocomplete...
-// Needs debouncing (info. in MUI docs)
 export default function CustomAutocomplete({
   isFor,
   inputValue,
@@ -17,6 +17,7 @@ export default function CustomAutocomplete({
   setForm: Dispatch<SetStateAction<Form>>;
 }) {
   const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = async (e: any, value: string | null) => {
     if (!value) return;
@@ -53,19 +54,47 @@ export default function CustomAutocomplete({
       [isFor]: { ...form[isFor], label: value },
     });
 
-    if (value.length > 2) {
-      fetch(`/api?label=${value}`)
-        .then((response) => response.json())
-        .then((data) => setOptions(data));
-    }
+    // if (value.length > 2) {
+    //   fetch(`/api?label=${value}`)
+    //     .then((response) => response.json())
+    //     .then((data) => setOptions(data));
+    // }
   };
+
+  const [debounced] = useDebounce(form[isFor].label, 1000);
+  useEffect(() => {
+    if (debounced.length > 2) {
+      setLoading(true);
+      fetch(`/api?label=${debounced}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setLoading(false);
+          setOptions(data);
+        });
+    }
+  }, [debounced]);
 
   return (
     <Autocomplete
       freeSolo
       options={options}
       renderInput={(params) => (
-        <TextField {...params} label="Název" variant="filled" />
+        <TextField
+          {...params}
+          label="Název"
+          variant="outlined"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+        />
       )}
       onChange={handleChange}
       inputValue={inputValue}

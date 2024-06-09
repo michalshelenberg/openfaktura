@@ -6,6 +6,6 @@ npm run tauri dev
 
 ## Todo
 
-- Autocomplete debounce
 - Fix scrollable form on mobile
 - Form validation
+- Fix onChange autocomplete (second) fetch

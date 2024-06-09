@@ -18,9 +18,7 @@ export const basicData = {
     setForm: Dispatch<SetStateAction<Form>>;
   }) => (
     <div className="flex flex-col divide-y">
-      <div className="p-4">
-        <p className="font-bold">1. Základní údaje</p>
-      </div>
+      <p className="font-bold p-4">1. Základní údaje</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <FormControl variant="filled" className="swiper-no-swiping">
           <InputLabel id="type-select">Druh faktury</InputLabel>
