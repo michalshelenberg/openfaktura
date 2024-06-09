@@ -1,4 +1,3 @@
-import { Form } from "@/components/editor";
 import {
   Document,
   Font,
@@ -17,7 +16,6 @@ Font.register({
   fonts: [{ src: "/fonts/Inter-Bold.ttf" }],
 });
 
-// NOT EVERYTHING NEEDS TO HAVE FLEX COLUMN
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Inter-Regular",
@@ -53,7 +51,8 @@ const styles = StyleSheet.create({
 });
 
 function Placeholder({ text }: { text: string | undefined }) {
-  const width = Math.floor(Math.random() * (75 - 50 + 1)) + 50;
+  // For unknown reason this causes double re-render
+  // const width = Math.floor(Math.random() * (75 - 50 + 1)) + 50;
 
   return (
     <>
@@ -62,7 +61,7 @@ function Placeholder({ text }: { text: string | undefined }) {
       ) : (
         <View
           style={{
-            width: `${width}%`,
+            width: `${100}%`,
             height: "12px",
             backgroundColor: "#d4d4d4",
             borderRadius: "4px",
@@ -73,8 +72,11 @@ function Placeholder({ text }: { text: string | undefined }) {
   );
 }
 
-export default function PDFDocument({ form }: { form: Form }) {
-  const { number, issueDate, dueDate, billFrom, billTo } = form;
+export default function PDFDocument({ form }: { form: any }) {
+  const { number, issueDate, dueDate, billFrom, billTo, bankAccountNumber } =
+    form;
+
+  console.log(bankAccountNumber);
 
   return (
     <Document>
@@ -113,27 +115,27 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Dodavatel:</Text>
-              <Placeholder text={billFrom.label} />
-              <Placeholder text={billFrom.street} />
+              <Placeholder text={billFrom?.label} />
+              <Placeholder text={billFrom?.street} />
               <Placeholder
                 text={
-                  billFrom.postalCode && billFrom.city
-                    ? `${billFrom.postalCode} ${billFrom.city}`
+                  billFrom?.postalCode && billFrom?.city
+                    ? `${billFrom?.postalCode} ${billFrom?.city}`
                     : ""
                 }
               />
-              <Placeholder text={billFrom.country} />
+              <Placeholder text={billFrom?.country} />
               <Text style={styles.font_bold}>Neplátce DPH</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                <Placeholder text={billFrom.ico} />
+                <Placeholder text={billFrom?.ico} />
               </View>
-              {billFrom.dic && (
+              {billFrom?.dic && (
                 <View style={styles.group}>
                   <Text style={styles.font_bold}>DIČ</Text>
-                  <Text>{billFrom.dic}</Text>
+                  <Text>{billFrom?.dic}</Text>
                 </View>
               )}
             </View>
@@ -142,27 +144,27 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.column}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Odběratel:</Text>
-              <Placeholder text={billTo.label} />
-              <Placeholder text={billTo.street} />
+              <Placeholder text={billTo?.label} />
+              <Placeholder text={billTo?.street} />
               <Placeholder
                 text={
-                  billTo.postalCode && billTo.city
-                    ? `${billTo.postalCode} ${billTo.city}`
+                  billTo?.postalCode && billTo?.city
+                    ? `${billTo?.postalCode} ${billTo?.city}`
                     : ""
                 }
               />
-              <Placeholder text={billTo.country} />
+              <Placeholder text={billTo?.country} />
               <Text>&nbsp;</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.group}>
                 <Text style={styles.font_bold}>IČO</Text>
-                <Placeholder text={billTo.ico} />
+                <Placeholder text={billTo?.ico} />
               </View>
-              {billTo.dic && (
+              {billTo?.dic && (
                 <View style={styles.group}>
                   <Text style={styles.font_bold}>DIČ</Text>
-                  <Text>{billTo.dic}</Text>
+                  <Text>{billTo?.dic}</Text>
                 </View>
               )}
             </View>
@@ -175,11 +177,11 @@ export default function PDFDocument({ form }: { form: Form }) {
           <View style={styles.row}>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Forma úhrady:</Text>
-              <Text>{form.paymentMethod}</Text>
+              <Text>{form?.paymentMethod}</Text>
             </View>
             <View style={styles.group}>
               <Text style={styles.font_bold}>Číslo účtu:</Text>
-              <Placeholder text={form.bankAccountNumber} />
+              <Placeholder text={bankAccountNumber} />
             </View>
             <View style={styles.group}></View>
             <View style={styles.group}></View>
@@ -191,11 +193,6 @@ export default function PDFDocument({ form }: { form: Form }) {
 }
 
 function ItemsTable({ items }: any) {
-  // const formatter = new Intl.NumberFormat("en-US", {
-  //   style: "currency",
-  //   currency: "USD",
-  // });
-
   const formatter = new Intl.NumberFormat("cs-CZ", {
     style: "currency",
     currency: "CZK",

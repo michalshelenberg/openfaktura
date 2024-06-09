@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useDebounce } from "use-debounce";
 
 export interface InvoiceBusiness {
   label: string;
@@ -29,7 +30,7 @@ export interface Form {
   issueDate: Dayjs | null;
   dueDate: Dayjs | null;
   paymentMethod: string;
-  bankAccountNumber: string;
+  bankAccountNumber: string | null;
   billFrom: InvoiceBusiness;
   billTo: InvoiceBusiness;
   items: Array<{ name: string; price: string; ammount: string; total: string }>;
@@ -38,16 +39,13 @@ export interface Form {
 const steps = [basicData, billFrom, billTo, invoiceItems];
 
 export default function Editor() {
-  // Find different way to debounce re-render of PDF preview
-  // const [form, setForm] = useDebounce<Form>(
-
   const [form, setForm] = useState<Form>({
     type: "bez-dph",
     number: `${dayjs().format("YYYYMM")}0001`,
     issueDate: dayjs(),
     dueDate: dayjs().add(14, "day"),
     paymentMethod: "Bankovní převod",
-    bankAccountNumber: "",
+    bankAccountNumber: null,
     billFrom: {
       label: "",
       ico: "",
@@ -69,6 +67,8 @@ export default function Editor() {
     items: [],
   });
 
+  const [debouncedForm] = useDebounce(form, 1000);
+
   return (
     <div className="flex flex-row flex-1">
       <Swiper
@@ -82,7 +82,7 @@ export default function Editor() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <PDFPreview form={form} />
+      <PDFPreview form={debouncedForm} />
     </div>
   );
 }
