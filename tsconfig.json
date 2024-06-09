@@ -28,5 +28,5 @@
     ".next/types/**/*.ts",
     "app/api/route.js"
   ],
-  "exclude": ["node_modules", "src-tauri"]
+  "exclude": ["node_modules"]
 }

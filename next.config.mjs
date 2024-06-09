@@ -6,5 +6,4 @@ const withPWA = withPWAInit({
 
 export default withPWA({
   // Next.js config
-  output: "export",
 });

@@ -42,7 +42,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.14",
     "@types/jquery": "^3.5.30",
     "@types/node": "^20",
     "@types/react": "^18",
