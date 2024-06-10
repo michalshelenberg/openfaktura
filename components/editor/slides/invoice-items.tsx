@@ -45,7 +45,7 @@ export const invoiceItems = {
         <p className="p-4 font-bold">4. Položky faktury</p>
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"
         >
           <TextField
             label="Název"

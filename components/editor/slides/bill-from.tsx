@@ -25,7 +25,7 @@ export const billFrom = {
     };
 
     return (
-      <div className="divide-y">
+      <div className="divide-y pb-8">
         <p className="p-4 font-bold">2. Dodavatel</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <Alert severity="info">
