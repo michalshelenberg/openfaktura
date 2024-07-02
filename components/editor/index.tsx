@@ -7,7 +7,7 @@ import { invoiceItems } from "@/components/editor/slides/invoice-items";
 import PDFPreview from "@/components/pdf-preview";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/cs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
@@ -39,50 +39,76 @@ export interface Form {
 const steps = [basicData, billFrom, billTo, invoiceItems];
 
 export default function Editor() {
-  const [form, setForm] = useState<Form>({
-    type: "bez-dph",
-    number: `${dayjs().format("YYYYMM")}0001`,
-    issueDate: dayjs(),
-    dueDate: dayjs().add(14, "day"),
-    paymentMethod: "Bankovní převod",
-    bankAccountNumber: null,
-    billFrom: {
-      label: "",
-      ico: "",
-      dic: "",
-      street: "",
-      city: "",
-      postalCode: "",
-      country: "",
-    },
-    billTo: {
-      label: "",
-      ico: "",
-      dic: "",
-      street: "",
-      city: "",
-      postalCode: "",
-      country: "",
-    },
-    items: [],
-  });
+  const [form, setForm] = useState<any>(null);
+
+  useEffect(() => {
+    const storedFormState = localStorage.getItem("formState");
+    if (storedFormState) {
+      const newState = JSON.parse(storedFormState);
+      if (newState !== null) {
+        newState.number = `${dayjs().format("YYYYMM")}0001`;
+        newState.issueDate = dayjs();
+        newState.dueDate = dayjs().add(14, "day");
+        setForm(newState);
+      }
+    } else {
+      setForm({
+        type: "bez-dph",
+        number: `${dayjs().format("YYYYMM")}0001`,
+        issueDate: dayjs(),
+        dueDate: dayjs().add(14, "day"),
+        paymentMethod: "Bankovní převod",
+        bankAccountNumber: null,
+        billFrom: {
+          label: "",
+          ico: "",
+          dic: "",
+          street: "",
+          city: "",
+          postalCode: "",
+          country: "",
+        },
+        billTo: {
+          label: "",
+          ico: "",
+          dic: "",
+          street: "",
+          city: "",
+          postalCode: "",
+          country: "",
+        },
+        items: [],
+      });
+    }
+  }, []);
 
   const [debouncedForm] = useDebounce(form, 1000);
 
+  // Save form on change to state to local storage
+  useEffect(() => {
+    if (form !== null) {
+      localStorage.setItem("formState", JSON.stringify(form));
+    }
+  }, [form]);
+
   return (
     <div className="flex flex-row flex-1">
-      <Swiper
-        pagination={true}
-        modules={[Pagination]}
-        className="flex-1 flex flex-col select-none"
-      >
-        {steps.map((step) => (
-          <SwiperSlide key={step.label}>
-            <step.body form={form} setForm={setForm} key={step.label} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-      <PDFPreview form={debouncedForm} />
+      {debouncedForm && (
+        <>
+          <Swiper
+            pagination={true}
+            modules={[Pagination]}
+            className="flex-1 flex flex-col select-none"
+          >
+            {steps.map((step) => (
+              <SwiperSlide key={step.label}>
+                <step.body form={form} setForm={setForm} key={step.label} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <PDFPreview form={debouncedForm} />
+        </>
+      )}
     </div>
   );
 }
