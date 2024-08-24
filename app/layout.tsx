@@ -4,8 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 const APP_NAME = "OpenFaktura";
-const APP_DEFAULT_TITLE =
-  "OpenFaktura - Open-source invoice generator that is completely free and does not require registration or an email address";
+const APP_DEFAULT_TITLE = "OpenFaktura - Open-source invoice generator";
 const APP_TITLE_TEMPLATE = "%s - OpenFaktura";
 const APP_DESCRIPTION =
   "Open-source invoice generator that is completely free and does not require registration or an email address";
