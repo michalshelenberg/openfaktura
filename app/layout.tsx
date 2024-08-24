@@ -3,20 +3,25 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
-
 const APP_NAME = "OpenFaktura";
-const APP_DESCRIPTION = "Faktura online bez registrace a zcela zdarma";
+const APP_DEFAULT_TITLE =
+  "OpenFaktura - Open-source invoice generator that is completely free and does not require registration or an email address";
+const APP_TITLE_TEMPLATE = "%s - OpenFaktura";
+const APP_DESCRIPTION =
+  "Open-source invoice generator that is completely free and does not require registration or an email address";
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
-  title: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
   description: APP_DESCRIPTION,
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: APP_NAME,
+    title: APP_DEFAULT_TITLE,
     // startUpImage: [],
   },
   formatDetection: {
@@ -25,19 +30,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: APP_NAME,
-    title: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
     description: APP_DESCRIPTION,
   },
   twitter: {
     card: "summary",
-    title: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
     description: APP_DESCRIPTION,
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#FFFFFF",
 };
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
