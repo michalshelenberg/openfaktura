@@ -42,7 +42,9 @@ export const invoiceItems = {
 
     return (
       <div className="divide-y">
-        <p className="p-4 font-bold">4. Položky faktury</p>
+        <div className="flex flex-row items-center justify-start sticky top-0 px-4 bg-blue-700 text-white h-[50px] z-10">
+          <p className="font-bold">4. Položky faktury</p>
+        </div>
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"

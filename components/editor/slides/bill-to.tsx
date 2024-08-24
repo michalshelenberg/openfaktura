@@ -26,7 +26,9 @@ export const billTo = {
 
     return (
       <div className="divide-y">
-        <p className="p-4 font-bold">3. Odběratel</p>
+        <div className="flex flex-row items-center justify-start sticky top-0 px-4 bg-blue-700 text-white h-[50px] z-10">
+          <p className="font-bold">3. Odběratel</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <Alert severity="info">
             <ul>
