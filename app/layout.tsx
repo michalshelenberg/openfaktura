@@ -35,6 +35,13 @@ export const metadata: Metadata = {
       template: APP_TITLE_TEMPLATE,
     },
     description: APP_DESCRIPTION,
+    images: [
+      {
+        url: "https://openfaktura.eu/og.jpg",
+        width: 800,
+        height: 600,
+      },
+    ],
   },
   twitter: {
     card: "summary",
