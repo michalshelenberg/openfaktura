@@ -3,13 +3,18 @@ import Link from "next/link";
 
 export default function Navigation() {
   return (
-    <div className="flex flex-row justify-between bg-black p-4 text-white sticky z-10 top-0">
-      <p className="font-bold">InFaktura</p>
+    <div className="flex flex-row gap-2 bg-black h-[50px] text-white sticky top-0">
       <nav>
-        <Link href={"/dashboard"}>
+        <Link
+          href={"#"}
+          className="h-full w-[50px] flex items-center justify-center"
+        >
           <AppsIcon />
         </Link>
       </nav>
+      <div className="flex flex-row items-center justify-center">
+        <h1 className="font-bold">OpenFaktura</h1>
+      </div>
     </div>
   );
 }

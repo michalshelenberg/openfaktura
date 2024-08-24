@@ -5,7 +5,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const APP_NAME = "InFaktura";
+const APP_NAME = "OpenFaktura";
 const APP_DESCRIPTION = "Faktura online bez registrace a zcela zdarma";
 
 export const metadata: Metadata = {
