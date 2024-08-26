@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Dispatch, FormEvent, SetStateAction } from "react";
+import TemporarySlideHeader from "./temporary-slide-header";
 
 export const invoiceItems = {
   label: "4. Položky faktury",
@@ -42,9 +43,7 @@ export const invoiceItems = {
 
     return (
       <div className="divide-y">
-        <div className="flex flex-row items-center justify-start sticky top-0 px-4 bg-blue-700 text-white h-[50px] z-10">
-          <p className="font-bold">4. Položky faktury</p>
-        </div>
+        <TemporarySlideHeader title="4. Položky faktury" />
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"

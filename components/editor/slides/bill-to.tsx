@@ -5,6 +5,7 @@ import { TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import { Dispatch, SetStateAction } from "react";
+import TemporarySlideHeader from "./temporary-slide-header";
 
 export const billTo = {
   label: "3. Odběratel",
@@ -26,9 +27,8 @@ export const billTo = {
 
     return (
       <div className="divide-y">
-        <div className="flex flex-row items-center justify-start sticky top-0 px-4 bg-blue-700 text-white h-[50px] z-10">
-          <p className="font-bold">3. Odběratel</p>
-        </div>
+        <TemporarySlideHeader title="3. Odběratel" />
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
           <Alert severity="info">
             <ul>
