@@ -20,13 +20,16 @@
     "cheerio": "^1.0.0-rc.12",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
+    "formik": "^2.4.6",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "react-icons": "^5.3.0",
     "request": "^2.88.2",
     "swiper": "^11.1.3",
-    "use-debounce": "^10.0.1"
+    "use-debounce": "^10.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",
