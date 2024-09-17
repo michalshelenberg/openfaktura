@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Navigation() {
   return (
-    <div className="flex flex-row gap-2 bg-black min-h-[50px] h-[50px] z-10 text-white sticky top-0">
+    <div className="flex flex-row gap-2 bg-blue-600 min-h-[50px] h-[50px] z-10 text-white sticky top-0">
       <nav>
         <Link
           href={"#"}

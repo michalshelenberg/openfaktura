@@ -27,11 +27,11 @@ export default function InvoiceBuilder() {
     dueDate: dayjs().add(14, "days"),
     paymentMethod: "bank-transfer",
     bankAccountNumber: "",
-    billFromName: ""
+    billFromName: "",
   };
 
   return (
-    <div className="flex flex-row flex-1">
+    <div className="flex flex-row flex-1 overflow-hidden">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

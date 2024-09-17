@@ -1,5 +1,5 @@
-import Editor from "@/components/editor";
+import InvoiceBuilder from "@/components/invoice-builder";
 
-export default function Home() {
-  return <Editor />;
+export default function Page() {
+  return <InvoiceBuilder />;
 }
