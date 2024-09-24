@@ -36,6 +36,15 @@ export default function InvoiceBuilder() {
       psc: "",
       country: "",
     },
+    billTo: {
+      name: "",
+      ico: "",
+      dic: "",
+      street: "",
+      city: "",
+      psc: "",
+      country: "",
+    },
   };
 
   return (

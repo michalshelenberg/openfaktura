@@ -10,7 +10,6 @@ interface Business {
   country: string;
 }
 
-// todo: TS go deeper
 export interface FormValues {
   invoiceType: "no-tax" | "tax";
   invoiceNumber: string;
@@ -19,4 +18,5 @@ export interface FormValues {
   paymentMethod: string;
   bankAccountNumber: string;
   billFrom: Business;
+  billTo: Business;
 }

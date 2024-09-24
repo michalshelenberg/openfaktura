@@ -6,6 +6,7 @@ import { useFormikContext } from "formik";
 import BasicInformation from "./basic-information";
 import BillFrom from "./bill-from";
 import Debugger from "./debugger";
+import BillTo from "./bill-to";
 
 export default function Form() {
   const formik = useFormikContext<FormValues>();
@@ -18,9 +19,10 @@ export default function Form() {
       >
         <BasicInformation />
         <BillFrom />
+        <BillTo />
         <Debugger />
         <Button type="submit" variant="contained">
-          Odeslat
+          Stahnout PDF
         </Button>
       </form>
     </div>
