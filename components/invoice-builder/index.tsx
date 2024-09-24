@@ -27,7 +27,15 @@ export default function InvoiceBuilder() {
     dueDate: dayjs().add(14, "days"),
     paymentMethod: "bank-transfer",
     bankAccountNumber: "",
-    billFromName: "",
+    billFrom: {
+      name: "",
+      ico: "",
+      dic: "",
+      street: "",
+      city: "",
+      psc: "",
+      country: "",
+    },
   };
 
   return (

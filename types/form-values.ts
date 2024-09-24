@@ -1,5 +1,15 @@
 import { Dayjs } from "dayjs";
 
+interface Business {
+  name: string;
+  ico: string;
+  dic?: string;
+  street: string;
+  city: string;
+  psc: string;
+  country: string;
+}
+
 // todo: TS go deeper
 export interface FormValues {
   invoiceType: "no-tax" | "tax";
@@ -8,6 +18,5 @@ export interface FormValues {
   dueDate: Dayjs;
   paymentMethod: string;
   bankAccountNumber: string;
-
-  billFromName: string;
+  billFrom: Business;
 }
