@@ -9,3 +9,5 @@
 - propagate form values to invoice preview
 - complete invoice items card
 - update metadata
+- remove unused dependencies
+- delete unused componenets
