@@ -8,7 +8,7 @@ const PDFViewer = dynamic(
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
-  }
+  },
 );
 
 export default function PDFPreview({ form }: { form: any }) {

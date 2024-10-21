@@ -11,7 +11,7 @@ const PDFViewer = dynamic(
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
-  }
+  },
 );
 
 export default function InvoicePreview() {
@@ -19,7 +19,7 @@ export default function InvoicePreview() {
   const [debouncedFormValues] = useDebounce(formik.values, 1000);
 
   return (
-    <div className="flex-shrink-0 flex-grow-0 basis-1/2 hidden lg:block">
+    <div className="hidden flex-shrink-0 flex-grow-0 basis-1/2 lg:block">
       <PDFViewer style={{ height: "100%", width: "100%" }} showToolbar={false}>
         <Document1 values={debouncedFormValues} />
       </PDFViewer>

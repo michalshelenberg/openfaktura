@@ -5,18 +5,18 @@ import { Button } from "@mui/material";
 import { useFormikContext } from "formik";
 import BasicInformation from "./basic-information";
 import BillFrom from "./bill-from";
-import Debugger from "./debugger";
 import BillTo from "./bill-to";
+import Debugger from "./debugger";
 import InvoiceItems from "./invoice-items";
 
 export default function Form() {
   const formik = useFormikContext<FormValues>();
 
   return (
-    <div className="flex-grow-0 flex-shrink-0 basis-1/2 overflow-y-scroll">
+    <div className="flex-shrink-0 flex-grow-0 basis-1/2 overflow-y-scroll">
       <form
         onSubmit={formik.handleSubmit}
-        className="max-w-[800px] w-full mx-auto py-[50px] px-4 space-y-4"
+        className="mx-auto w-full max-w-[800px] space-y-4 px-4 py-[50px]"
       >
         <BasicInformation />
         <BillFrom />

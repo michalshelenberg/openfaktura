@@ -46,7 +46,7 @@ export const invoiceItems = {
         <TemporarySlideHeader title="4. Položky faktury" />
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4"
+          className="grid grid-cols-2 gap-4 p-4 md:grid-cols-4"
         >
           <TextField
             label="Název"

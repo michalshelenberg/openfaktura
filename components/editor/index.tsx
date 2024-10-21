@@ -92,13 +92,13 @@ export default function Editor() {
   }, [form]);
 
   return (
-    <div className="flex flex-row flex-1">
+    <div className="flex flex-1 flex-row">
       {debouncedForm && (
         <>
           <Swiper
             pagination={true}
             modules={[Pagination]}
-            className="flex-1 flex flex-col select-none"
+            className="flex flex-1 select-none flex-col"
           >
             {steps.map((step) => (
               <SwiperSlide key={step.label}>

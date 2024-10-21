@@ -20,7 +20,7 @@ export default function BillFrom() {
   const [loading, setLoading] = useState(false);
   const [debouncedAutocomplete] = useDebounce(
     formik.values.billFrom.name,
-    1000
+    1000,
   );
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function BillFrom() {
   return (
     <Card>
       <CardHeader title="Dodavatel" />
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Autocomplete
           freeSolo
           options={options}

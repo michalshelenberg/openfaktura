@@ -1,6 +1,6 @@
 export async function FetchAres(ico: string) {
   const data = await fetch(
-    `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`
+    `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${ico}`,
   ).then((res) => res.json());
 
   let street = data.sidlo.nazevUlice ?? data.sidlo.nazevObce;

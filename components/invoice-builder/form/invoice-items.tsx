@@ -22,7 +22,7 @@ function createData(
   calories: number,
   fat: number,
   carbs: number,
-  protein: number
+  protein: number,
 ) {
   return { name, calories, fat, carbs, protein };
 }

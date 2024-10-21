@@ -29,14 +29,14 @@ export default function BasicInformation() {
         formik.setFieldValue(
           "dueDate",
           formik.values.issueDate.add(14, "days"),
-          true
+          true,
         );
         break;
       case "30-days":
         formik.setFieldValue(
           "dueDate",
           formik.values.issueDate.add(30, "days"),
-          true
+          true,
         );
         break;
       case "custom-date":
@@ -50,7 +50,7 @@ export default function BasicInformation() {
   return (
     <Card>
       <CardHeader title="Základní informace" />
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
+      <CardContent className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
         <TextField
           select
           name="invoiceType"
@@ -69,7 +69,7 @@ export default function BasicInformation() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={Boolean(
-            formik.touched.invoiceNumber && formik.errors.invoiceNumber
+            formik.touched.invoiceNumber && formik.errors.invoiceNumber,
           )}
           helperText={
             formik.touched.invoiceNumber && formik.errors.invoiceNumber

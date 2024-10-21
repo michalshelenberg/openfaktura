@@ -19,7 +19,7 @@ export default function DatePickers({
   const [issueDate, setIssueDate] = useState(dayjs());
   const [dueDate, setDueDate] = useState(issueDate.add(14, "day"));
   const [dueSelect, setDueSelect] = useState(
-    JSON.stringify({ value: 14, unit: "day" })
+    JSON.stringify({ value: 14, unit: "day" }),
   );
   const dueDateRef = useRef<any>();
 
@@ -47,7 +47,7 @@ export default function DatePickers({
     } else {
       const newSelectValueObj = JSON.parse(newSelectValue);
       setDueDate(
-        issueDate.add(newSelectValueObj.value, newSelectValueObj.unit)
+        issueDate.add(newSelectValueObj.value, newSelectValueObj.unit),
       );
     }
   };
@@ -57,7 +57,7 @@ export default function DatePickers({
   }, [issueDate, dueDate]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="cs">
         <MobileDatePicker
           label="Datum vystavení"
@@ -68,7 +68,7 @@ export default function DatePickers({
           className="swiper-no-swiping"
         />
         <div className="flex flex-row gap-4">
-          <FormControl variant="filled" className="flex-1 swiper-no-swiping">
+          <FormControl variant="filled" className="swiper-no-swiping flex-1">
             <InputLabel id="due-select-label">Splatnost</InputLabel>
             <Select
               label="Splatnost"
@@ -92,7 +92,7 @@ export default function DatePickers({
             value={dueDate}
             onChange={handleDueDateChange}
             inputRef={dueDateRef}
-            className="flex-1 swiper-no-swiping"
+            className="swiper-no-swiping flex-1"
           />
         </div>
       </LocalizationProvider>

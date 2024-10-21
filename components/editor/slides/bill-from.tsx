@@ -28,7 +28,7 @@ export const billFrom = {
     return (
       <div className="divide-y pb-8">
         <TemporarySlideHeader title="2. Dodavatel" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
           <Alert severity="info">
             <ul>
               <li>Vyhledávejte podle názvu podniku</li>
@@ -41,7 +41,7 @@ export const billFrom = {
             form={form}
             setForm={setForm}
           />
-          <div className="flex flex-row gap-4 items-center justify-center">
+          <div className="flex flex-row items-center justify-center gap-4">
             <TextField
               label="ICO"
               variant="filled"
@@ -54,7 +54,7 @@ export const billFrom = {
               size={"large"}
               onClick={async () => {
                 const data = await fetch(
-                  `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${form.billFrom.ico}`
+                  `https://ares.gov.cz/ekonomicke-subjekty-v-be/rest/ekonomicke-subjekty/${form.billFrom.ico}`,
                 ).then((res) => res.json());
 
                 let street = data.sidlo.nazevUlice ?? data.sidlo.nazevObce;
@@ -87,7 +87,7 @@ export const billFrom = {
             onChange={handleTextFieldChange}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+        <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
           <TextField
             label="Ulice"
             variant="filled"

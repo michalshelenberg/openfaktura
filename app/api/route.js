@@ -45,7 +45,7 @@ function searchJustice(companyName) {
         } else {
           reject(error);
         }
-      }
+      },
     );
   });
 }

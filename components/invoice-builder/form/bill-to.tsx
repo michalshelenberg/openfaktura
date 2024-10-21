@@ -1,18 +1,18 @@
 "use client";
 
 import { FormValues } from "@/types/form-values";
+import { FetchAres } from "@/utils/fetch-ares";
 import {
   Autocomplete,
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   TextField,
 } from "@mui/material";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { CircularProgress } from "@mui/material";
 import { useDebounce } from "use-debounce";
-import { FetchAres } from "@/utils/fetch-ares";
 
 export default function BillTo() {
   const formik = useFormikContext<FormValues>();
@@ -48,7 +48,7 @@ export default function BillTo() {
   return (
     <Card>
       <CardHeader title="Odběratel" />
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Autocomplete
           freeSolo
           options={options}

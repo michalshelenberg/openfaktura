@@ -56,7 +56,7 @@ export default function InvoiceBuilder() {
         console.log(JSON.stringify(values, null, 2));
       }}
     >
-      <div className="flex flex-row w-screen h-screen">
+      <div className="flex h-screen w-screen flex-row">
         <Form />
         <InvoicePreview />
       </div>

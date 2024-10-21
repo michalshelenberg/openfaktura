@@ -278,7 +278,10 @@ function ItemsTable({ items }: any) {
         {/* <Text style={styles.font_bold}>Celkem k úhradě:</Text> */}
         <Text style={{ textAlign: "right", ...styles.font_bold }}>
           {formatter.format(
-            items.reduce((sum: any, item: any) => sum + parseInt(item.total), 0)
+            items.reduce(
+              (sum: any, item: any) => sum + parseInt(item.total),
+              0,
+            ),
           )}
         </Text>
       </View>
