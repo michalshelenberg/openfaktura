@@ -1,4 +1,3 @@
-import Navigation from "@/components/navigation";
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -66,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navigation />
+        {/* <Navigation /> */}
         {children}
       </body>
     </html>

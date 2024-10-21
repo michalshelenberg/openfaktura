@@ -8,3 +8,8 @@
   background: white !important;
   padding: 4px !important;
 }
+
+html,
+body {
+  background: hsla(215, 15%, 97%, 0.5);
+}

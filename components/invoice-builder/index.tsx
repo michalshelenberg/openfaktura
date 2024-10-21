@@ -45,22 +45,21 @@ export default function InvoiceBuilder() {
       psc: "",
       country: "",
     },
+    items: [],
   };
 
   return (
-    <div className="flex flex-row flex-1 overflow-hidden">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log(JSON.stringify(values, null, 2));
-        }}
-      >
-        <>
-          <Form />
-          <InvoicePreview />
-        </>
-      </Formik>
-    </div>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        console.log(JSON.stringify(values, null, 2));
+      }}
+    >
+      <div className="flex flex-row w-screen h-screen">
+        <Form />
+        <InvoicePreview />
+      </div>
+    </Formik>
   );
 }

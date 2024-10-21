@@ -7,12 +7,13 @@ import BasicInformation from "./basic-information";
 import BillFrom from "./bill-from";
 import Debugger from "./debugger";
 import BillTo from "./bill-to";
+import InvoiceItems from "./invoice-items";
 
 export default function Form() {
   const formik = useFormikContext<FormValues>();
 
   return (
-    <div className="bg-gray-100 flex-1 overflow-y-scroll">
+    <div className="flex-grow-0 flex-shrink-0 basis-1/2 overflow-y-scroll">
       <form
         onSubmit={formik.handleSubmit}
         className="max-w-[800px] w-full mx-auto py-[50px] px-4 space-y-4"
@@ -20,6 +21,7 @@ export default function Form() {
         <BasicInformation />
         <BillFrom />
         <BillTo />
+        <InvoiceItems />
         <Debugger />
         <Button type="submit" variant="contained">
           Stahnout PDF

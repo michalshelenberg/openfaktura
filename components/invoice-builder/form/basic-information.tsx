@@ -50,7 +50,7 @@ export default function BasicInformation() {
   return (
     <Card>
       <CardHeader title="Základní informace" />
-      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-6">
         <TextField
           select
           name="invoiceType"
