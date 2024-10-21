@@ -48,7 +48,7 @@ export default function BillTo() {
   return (
     <Card>
       <CardHeader title="Odběratel" />
-      <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <CardContent className="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
         <Autocomplete
           freeSolo
           options={options}

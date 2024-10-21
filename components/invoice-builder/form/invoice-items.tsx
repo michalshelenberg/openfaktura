@@ -1,21 +1,18 @@
+import { FormValues } from "@/types/form-values";
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
-  FormControl,
   TextField,
 } from "@mui/material";
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button } from "@mui/material";
-import { useFormikContext } from "formik";
-import { Formik } from "formik";
-import { FormValues } from "@/types/form-values";
+import { Formik, useFormikContext } from "formik";
 
 function createData(
   name: string,
@@ -53,7 +50,7 @@ export default function InvoiceItems() {
         >
           {(subformik) => (
             <form id="items-form">
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-x-4 gap-y-6">
                 <TextField
                   label="Popis"
                   {...subformik.getFieldProps("description")}

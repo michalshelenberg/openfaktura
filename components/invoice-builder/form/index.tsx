@@ -13,10 +13,10 @@ export default function Form() {
   const formik = useFormikContext<FormValues>();
 
   return (
-    <div className="flex-shrink-0 flex-grow-0 basis-1/2 overflow-y-scroll">
+    <div className="flex-shrink-0 flex-grow-0 basis-1/2 overflow-y-scroll px-4 py-[50px]">
       <form
         onSubmit={formik.handleSubmit}
-        className="mx-auto w-full max-w-[800px] space-y-4 px-4 py-[50px]"
+        className="mx-auto w-full max-w-[800px] space-y-6"
       >
         <BasicInformation />
         <BillFrom />
@@ -24,7 +24,7 @@ export default function Form() {
         <InvoiceItems />
         <Debugger />
         <Button type="submit" variant="contained">
-          Stahnout PDF
+          Stáhnout PDF
         </Button>
       </form>
     </div>
