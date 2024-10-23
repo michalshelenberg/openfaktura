@@ -54,6 +54,7 @@ export default function InvoiceItems() {
                   <TableCell>Název</TableCell>
                   <TableCell align="right">Počet</TableCell>
                   <TableCell align="right">Cena</TableCell>
+                  <TableCell align="right">Cena celkem</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -67,6 +68,9 @@ export default function InvoiceItems() {
                     </TableCell>
                     <TableCell align="right">{item.ammount}</TableCell>
                     <TableCell align="right">{item.price}</TableCell>
+                    <TableCell align="right">
+                      {item.ammount * item.price}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

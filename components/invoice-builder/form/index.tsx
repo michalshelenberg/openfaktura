@@ -2,11 +2,12 @@
 
 import { FormValues } from "@/types/form-values";
 import { Button } from "@mui/material";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { useFormikContext } from "formik";
+import Document1 from "../invoice-templates/document-1";
 import BasicInformation from "./basic-information";
 import BillFrom from "./bill-from";
 import BillTo from "./bill-to";
-import Debugger from "./debugger";
 import InvoiceItems from "./invoice-items";
 
 export default function Form() {
@@ -22,10 +23,12 @@ export default function Form() {
         <BillFrom />
         <BillTo />
         <InvoiceItems />
-        <Debugger />
-        <Button type="submit" variant="contained">
-          Stáhnout PDF
-        </Button>
+        {/* <Debugger /> */}
+        <div>
+          <PDFDownloadLink document={<Document1 values={formik.values} />}>
+            <Button variant="contained">Stáhnout PDF</Button>
+          </PDFDownloadLink>
+        </div>
       </form>
     </div>
   );

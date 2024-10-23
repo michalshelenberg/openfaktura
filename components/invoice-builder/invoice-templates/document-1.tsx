@@ -52,7 +52,7 @@ export default function Document1({ values }: { values: FormValues }) {
           <BillFromAndBillTo values={values} />
           <PaymentInformation values={values} />
           <InvoiceItems values={values} />
-          <PayTotal />
+          <PayTotal values={values} />
         </View>
         <View
           style={{ display: "flex", alignItems: "flex-end", marginTop: "16px" }}
@@ -264,7 +264,10 @@ function InvoiceItems({ values }: { values: FormValues }) {
   );
 }
 
-function PayTotal() {
+function PayTotal({ values }: { values: FormValues }) {
+  let sumTotal = 0;
+  values.items.forEach((item) => (sumTotal += item.ammount * item.price));
+
   return (
     <View
       style={{
@@ -276,7 +279,8 @@ function PayTotal() {
       }}
     >
       <Text style={styles.title}>Celkem k úhradě</Text>
-      <Text style={styles.title}>1000,00 Kč</Text>
+      {/* <Text style={styles.title}>1000,00 Kč</Text> */}
+      <Text style={styles.title}>{sumTotal} Kč</Text>
     </View>
   );
 }
