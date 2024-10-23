@@ -1,18 +1,13 @@
 import { FormValues } from "@/types/form-values";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  TextField,
-} from "@mui/material";
+import { Card, CardContent, CardHeader } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Formik, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
+import BasicModal from "./add-item-modal";
 
 function createData(
   name: string,
@@ -32,6 +27,18 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function InvoiceItems() {
   const formik = useFormikContext<FormValues>();
 
@@ -39,60 +46,34 @@ export default function InvoiceItems() {
     <Card>
       <CardHeader title="Položky faktury" />
       <CardContent>
-        <Formik
-          initialValues={{ description: "", ammount: 0, price: 0 }}
-          onSubmit={(values) => {
-            console.log(JSON.stringify(values, null, 2));
-            const newItems = formik.values.items;
-            newItems.push(values);
-            formik.setFieldValue("items", newItems, true);
-          }}
-        >
-          {(subformik) => (
-            <form id="items-form">
-              <div className="grid grid-cols-4 gap-x-4 gap-y-6">
-                <TextField
-                  label="Popis"
-                  {...subformik.getFieldProps("description")}
-                  className="col-span-4 md:col-span-2"
-                />
-                <TextField
-                  label="Počet"
-                  {...subformik.getFieldProps("ammount")}
-                />
-                <TextField label="Cena" {...subformik.getFieldProps("price")} />
-              </div>
-              <Button variant="outlined" onClick={subformik.submitForm}>
-                Přidat položku
-              </Button>
-            </form>
-          )}
-        </Formik>
-        <TableContainer>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {formik.values.items.map(({ item }) => (
-                <TableRow
-                  key={item.description}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
+        {formik.values.items.length > 0 && (
+          <TableContainer>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Název</TableCell>
+                  <TableCell align="right">Počet</TableCell>
+                  <TableCell align="right">Cena</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {formik.values.items.map((item) => (
+                  <TableRow
+                    key={item.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {item.name}
+                    </TableCell>
+                    <TableCell align="right">{item.ammount}</TableCell>
+                    <TableCell align="right">{item.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+        <BasicModal />
       </CardContent>
     </Card>
   );

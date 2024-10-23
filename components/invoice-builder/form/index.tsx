@@ -13,7 +13,7 @@ export default function Form() {
   const formik = useFormikContext<FormValues>();
 
   return (
-    <div className="flex-shrink-0 flex-grow-0 basis-1/2 overflow-y-scroll px-4 py-[50px]">
+    <div className="flex-1 overflow-y-scroll px-4 py-[50px] md:max-w-[50%]">
       <form
         onSubmit={formik.handleSubmit}
         className="mx-auto w-full max-w-[800px] space-y-6"

@@ -19,5 +19,5 @@ export interface FormValues {
   bankAccountNumber: string;
   billFrom: Business;
   billTo: Business;
-  items: Array<{ description: string; ammount: number; price: number }>;
+  items: Array<{ name: string; ammount: number; price: number }>;
 }

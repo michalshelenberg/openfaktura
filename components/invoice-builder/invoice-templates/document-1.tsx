@@ -49,9 +49,9 @@ export default function Document1({ values }: { values: FormValues }) {
           }}
         >
           <InvoiceNumber values={values} />
-          <BillFromAndBillTo />
-          <PaymentInformation />
-          {/* <InvoiceItems /> */}
+          <BillFromAndBillTo values={values} />
+          <PaymentInformation values={values} />
+          <InvoiceItems values={values} />
           <PayTotal />
         </View>
         <View
@@ -82,7 +82,7 @@ function InvoiceNumber({ values }: { values: FormValues }) {
   );
 }
 
-function BillFromAndBillTo() {
+function BillFromAndBillTo({ values }: { values: FormValues }) {
   return (
     <View
       style={{
@@ -104,16 +104,18 @@ function BillFromAndBillTo() {
         }}
       >
         <Text style={styles.title}>DODAVATEL</Text>
-        <Text style={{ fontWeight: "bold" }}>Martin Sap</Text>
+        <Text style={{ fontWeight: "bold" }}>{values.billFrom.name}</Text>
         <View style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <Text>Vejvanovského 1611/18, Chodov</Text>
-          <Text>14900 Praha</Text>
-          <Text>Česká republika</Text>
+          <Text>{values.billFrom.street}</Text>
+          <Text>
+            {values.billFrom.psc} {values.billFrom.city}
+          </Text>
+          <Text>{values.billFrom.country}</Text>
         </View>
         <View style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <View style={{ display: "flex", flexDirection: "row", gap: "16px" }}>
             <Text style={{ fontWeight: "bold" }}>IČO</Text>
-            <Text>1234567</Text>
+            <Text>{values.billFrom.ico}</Text>
           </View>
           <Text style={{ fontWeight: "bold" }}>Neplátce DPH</Text>
         </View>
@@ -130,11 +132,13 @@ function BillFromAndBillTo() {
         }}
       >
         <Text style={styles.title}>ODBĚRATEL</Text>
-        <Text style={{ fontWeight: "bold" }}>Martin Sap</Text>
+        <Text style={{ fontWeight: "bold" }}>{values.billTo.name}</Text>
         <View style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          <Text>Vejvanovského 1611/18, Chodov</Text>
-          <Text>14900 Praha</Text>
-          <Text>Česká republika</Text>
+          <Text>{values.billTo.street}</Text>
+          <Text>
+            {values.billTo.psc} {values.billTo.city}
+          </Text>
+          <Text>{values.billTo.country}</Text>
         </View>
         <View style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           <Text style={{ fontWeight: "bold" }}>IČO</Text>
@@ -145,7 +149,7 @@ function BillFromAndBillTo() {
   );
 }
 
-function PaymentInformation() {
+function PaymentInformation({ values }: { values: FormValues }) {
   return (
     <View
       style={{
@@ -182,7 +186,7 @@ function PaymentInformation() {
           }}
         >
           <Text>Číslo účtu</Text>
-          <Text style={{ fontWeight: "bold" }}>0105274124/0100</Text>
+          <Text style={{ fontWeight: "bold" }}>{values.bankAccountNumber}</Text>
         </View>
         <View
           style={{
@@ -195,9 +199,67 @@ function PaymentInformation() {
           }}
         >
           <Text>Datum vystavení</Text>
-          <Text style={{ fontWeight: "bold" }}>8.9.2024</Text>
+          <Text style={{ fontWeight: "bold" }}>
+            {values.issueDate.format("DD.MM.YYYY")}
+          </Text>
         </View>
       </View>
+    </View>
+  );
+}
+
+function InvoiceItems({ values }: { values: FormValues }) {
+  return (
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+        // justifyContent: "flex-end",
+        padding: "16px",
+        borderBottom: "1px dashed #CCCCCC",
+      }}
+    >
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <View style={{ flexBasis: "50%" }}>
+          <Text style={{ fontWeight: "bold" }}>Popis</Text>
+        </View>
+        <View style={{ flexBasis: "16.666667%" }}>
+          <Text style={{ fontWeight: "bold" }}>Počet</Text>
+        </View>
+        <View style={{ flexBasis: "16.666667%" }}>
+          <Text style={{ fontWeight: "bold" }}>Cena</Text>
+        </View>
+        <View style={{ flexBasis: "16.666667%" }}>
+          <Text style={{ fontWeight: "bold" }}>Cena celkem</Text>
+        </View>
+      </View>
+      {values.items.map((item) => (
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <View style={{ flexBasis: "50%" }}>
+            <Text>{item.name}</Text>
+          </View>
+          <View style={{ flexBasis: "16.666667%" }}>
+            <Text>{item.ammount}</Text>
+          </View>
+          <View style={{ flexBasis: "16.666667%" }}>
+            <Text>{item.price}</Text>
+          </View>
+          <View style={{ flexBasis: "16.666667%" }}>
+            <Text>{item.ammount * item.price}</Text>
+          </View>
+        </View>
+      ))}
     </View>
   );
 }
